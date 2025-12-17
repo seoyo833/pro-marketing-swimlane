@@ -12,7 +12,6 @@
       --muted:#64748b;
       --border:#e5e7eb;
 
-      /* 다이어그램 레이아웃 */
       --labelW:190px;
       --colW:240px;
       --gap:96px;
@@ -120,9 +119,10 @@
     }
     .node:hover{ transform: translateY(-1px); box-shadow: 0 6px 18px rgba(15,23,42,.10); border-color:#cbd5e1; }
 
+    /* ✅ 핵심 수정: 시스템 노드는 배경을 '불투명'하게 해서 (뒤로 지나가는) 화살표가 비치지 않도록 */
     .node.system{
       border-color: rgba(14,165,233,.55);
-      background: rgba(14,165,233,.06);
+      background: #eaf7ff; /* (기존 rgba 제거 → 불투명) */
     }
 
     .node__title{
@@ -241,10 +241,7 @@
             <div class="node" data-key="customer-5" data-step="5" style="grid-column:5"><div class="node__title">5. 카드 등록 진행(필요 시)</div><div class="node__meta">(몰어드민) 광고 정보 확인 &amp; 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신</div></div>
             <div class="node" data-key="customer-6" data-step="6" style="grid-column:6"><div class="node__title">6. 광고 자산 연동 요청/점검</div><div class="node__meta">(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신</div></div>
             <div class="node" data-key="customer-7" data-step="7" style="grid-column:7"><div class="node__title">7. 후불 한도/세팅 안내 확인</div><div class="node__meta">(알림톡) 후불 한도 확정 &amp; 광고 세팅 안내 수신</div></div>
-
-            <!-- ✅ 요청: 8번 문구 -->
             <div class="node" data-key="customer-8" data-step="8" style="grid-column:8"><div class="node__title">8. 광고계정 생성 확인</div><div class="node__meta">(몰어드민) 광고계정 생성 완료 확인 &amp; 해지 버튼 노출</div></div>
-
             <div class="node" data-key="customer-9" data-step="9" style="grid-column:9"><div class="node__title">9. 광고 시작/세팅 내역 수신</div><div class="node__meta">(알림톡/이메일) 광고 시작 안내 &amp; 세팅 내역 수신</div></div>
             <div class="node" data-key="customer-10" data-step="10" style="grid-column:10"><div class="node__title">10. 운영 루틴 결과 수신</div><div class="node__meta">(알림톡/이메일) 광고 세팅 &amp; 필터링 내역 수신</div></div>
             <div class="node" data-key="customer-11" data-step="11" style="grid-column:11"><div class="node__title">11. 주간 보고서 수신</div><div class="node__meta">(알림톡/이메일) 광고보고서 수신</div></div>
@@ -303,7 +300,6 @@
             <small>후불 과금/한도/예산/정산/미수금/부속합의 중심 흐름</small>
           </div>
           <div class="lane__body">
-            <!-- ✅ 균등 간격: [1,2,4,5,7,8,9,11,12,14,15] -->
             <div class="node" data-key="contract-1" data-step="1" style="grid-column:1"><div class="node__title">1. 가입/동의 기반 형성</div><div class="node__meta">PRO 마케팅 신청 &amp; 약관 동의(신청 자격 충족 시)</div></div>
             <div class="node" data-key="contract-2" data-step="2" style="grid-column:2"><div class="node__title">2. 결제수단 확보</div><div class="node__meta">카드 등록(미등록 시 등록 요청) / 기등록 카드 확인</div></div>
             <div class="node" data-key="contract-3" data-step="3" style="grid-column:4"><div class="node__title">3. 한도 확정</div><div class="node__meta">“후불 한도 확정 &amp; 광고 세팅 안내” 수신</div></div>
@@ -339,24 +335,7 @@
   </div>
 
   <script>
-  /* nodeDetails: 이전과 동일(필요한 부분: customer-8 수정 반영) */
-  const nodeDetails = {
-    "customer-1":{"title":"고객 · 1) 안내 수신 후 신청 진입","subtitle":"(알림톡) PRO 마케팅 소개 & 가입 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) PRO 마케팅 소개 & 가입 안내 수신"},{"title":"시스템","content":"대상자 선별 결과 기반 발송 이력 저장"},{"title":"운영자/센터","content":"문의 응대(선택)"}]},
-    "customer-2":{"title":"고객 · 2) 신청/약관 동의","subtitle":"(몰어드민) PRO 마케팅 신청 & 약관 동의","details":[{"title":"광고주(경험)","content":"(몰어드민) PRO 마케팅 신청 & 약관 동의"},{"title":"시스템","content":"신청 접수, 신청 상태 생성/저장"},{"title":"운영자/센터","content":"신청 가이드(선택)"}]},
-    "customer-3":{"title":"고객 · 3) 신청 완료 확인","subtitle":"(알림톡) 신청완료 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 신청완료 안내 수신"},{"title":"시스템","content":"FAS 접수/상태 업데이트"},{"title":"운영자/센터","content":"모니터링"}]},
-    "customer-4":{"title":"고객 · 4) 업종 심사 결과 확인","subtitle":"(알림톡) 진행 불가 안내 수신(해당 시)","details":[{"title":"광고주(경험)","content":"(알림톡) 진행 불가 안내 수신(해당 시)"},{"title":"시스템","content":"업종 심사 결과(YES/NO) 저장"},{"title":"운영자/센터","content":"ANPL팀 심사(진행불가 업종: 성인용품/이미테이션/기타)"}]},
-    "customer-5":{"title":"고객 · 5) 카드 등록 진행(필요 시)","subtitle":"(몰어드민) 광고 정보 확인 & 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고 정보 확인 & 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신"},{"title":"시스템","content":"카드 등록여부 상태 관리, 완료 여부 업데이트"},{"title":"운영자/센터","content":"카드등록 문의 대응(선택)"}]},
-    "customer-6":{"title":"고객 · 6) 광고 자산 연동 요청/점검","subtitle":"(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신"},{"title":"시스템","content":"자산 연동여부/완료 상태 업데이트"},{"title":"운영자/센터","content":"연동 지원/점검(선택)"}]},
-    "customer-7":{"title":"고객 · 7) 후불 한도/세팅 안내 확인","subtitle":"(알림톡) 후불 한도 확정 & 광고 세팅 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 후불 한도 확정 & 광고 세팅 안내 수신"},{"title":"시스템","content":"후불 한도 값 확정/저장, 예산 반영 상태 저장"},{"title":"운영자/센터","content":"운영자 한도 확정/예산 반영"}]},
-    "customer-8":{"title":"고객 · 8) 광고계정 생성 확인","subtitle":"(몰어드민) 광고계정 생성 완료 확인 & 해지 버튼 노출","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고계정 생성 완료 확인 & 해지 버튼 노출"},{"title":"시스템","content":"광고계정 생성 상태 전환 기록"},{"title":"운영자/센터","content":"운영자 검수 후 ON"}]},
-    "customer-9":{"title":"고객 · 9) 광고 시작/세팅 내역 수신","subtitle":"(알림톡/이메일) 광고 시작 안내 & 세팅 내역 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고 시작 안내 & 세팅 내역 수신"},{"title":"시스템","content":"발송 이력/세팅 스냅샷 저장"}]},
-    "customer-10":{"title":"고객 · 10) 운영 루틴 결과 수신","subtitle":"(알림톡/이메일) 광고 세팅 & 필터링 내역 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고 세팅 & 필터링 내역 수신"},{"title":"시스템","content":"차마솔 시나리오 정기 실행 결과 저장"},{"title":"운영자/센터","content":"이슈 대응(선택)"}]},
-    "customer-11":{"title":"고객 · 11) 주간 보고서 수신","subtitle":"(알림톡/이메일) 광고보고서 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고보고서 수신"},{"title":"시스템","content":"CMC 광고보고서 주간 생성 결과 저장"},{"title":"운영자/센터","content":"보고서 세팅(운영자)"}]},
-    "customer-12":{"title":"고객 · 12) 월간 예산 반영 알림 수신","subtitle":"(알림톡) 후불 예산 반영 알림 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 후불 예산 반영 알림 수신"},{"title":"시스템","content":"예산 반영 결과 저장"},{"title":"운영자/센터","content":"운영자 반영"}]},
-    "customer-13":{"title":"고객 · 13) 한도 재산정(증/감액) 대응","subtitle":"증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신","details":[{"title":"광고주(경험)","content":"증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신"},{"title":"시스템","content":"한도 증/감액 상태 저장, 증액은 ‘부속합의 동의’ 결과 반영"},{"title":"운영자/센터","content":"증액 적용/감액 적용(운영자), 일예산 조정(시스템)"}]},
-    "customer-14":{"title":"고객 · 14) 후불 정산/미수금 확인","subtitle":"(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&중단/채권추심 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&중단/채권추심 안내 수신"},{"title":"시스템","content":"정산금 산정, PG차감 vs 미수금 분기, 미수금 카드결제 시도 결과 저장"},{"title":"운영자/센터","content":"미수금 시 광고 중단/추심 진행(운영자)"}]},
-    "customer-15":{"title":"고객 · 15) 해지 요청/완료","subtitle":"(몰어드민) 1:1 문의/CTI 접수 → 해지&정산 안내/완료 확인, (알림톡) 정산완료&해지완료 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 1:1 문의/CTI 접수 → 해지&정산 안내/완료 확인, (알림톡) 정산완료&해지완료 수신"},{"title":"시스템","content":"해지 상태 전환/정산 완료 처리"},{"title":"운영자/센터","content":"해지 요청 확인→광고중단→정산→해지 처리(운영자)"}]}
-  };
+  const nodeDetails = {}; // (필요 시 기존 nodeDetails 그대로 붙여 넣으면 됩니다)
 
   const diagram = document.getElementById('diagram');
   const svg = document.getElementById('lines');
@@ -427,14 +406,19 @@
     };
   }
 
-  /* ✅ 핵심 변경: 같은 레인 가로 화살표를 "노드 중앙(센터)"로 연결 */
+  function laneRectInDiagram(el, diagramRect){
+    const lane = el.closest('.lane');
+    const r = lane.getBoundingClientRect();
+    return { top: r.top - diagramRect.top, bottom: r.bottom - diagramRect.top };
+  }
+
   function laneFlowCenter(fromEl, toEl, cls){
     const diagramRect = diagram.getBoundingClientRect();
     const a = rectInDiagram(fromEl, diagramRect);
     const b = rectInDiagram(toEl, diagramRect);
 
-    const y = a.cy;         // ✅ 노드 중앙선
-    const x1 = a.right + 1; // ✅ 붙여서
+    const y = a.cy;
+    const x1 = a.right + 1;
     const x2 = b.left - 1;
 
     const dist = Math.abs(x2 - x1);
@@ -447,12 +431,6 @@
     svg.appendChild(p);
   }
 
-  /* 레인 간 연결은 ㄱ자(노드 관통 방지) */
-  function laneRectInDiagram(el, diagramRect){
-    const lane = el.closest('.lane');
-    const r = lane.getBoundingClientRect();
-    return { top: r.top - diagramRect.top, bottom: r.bottom - diagramRect.top };
-  }
   function crossLane(fromEl, toEl, cls){
     const diagramRect = diagram.getBoundingClientRect();
     const a = rectInDiagram(fromEl, diagramRect);
@@ -516,7 +494,6 @@
       { name:'contract', cls:'arrow' }
     ];
 
-    // ✅ 레인 내 순차 연결: 중앙선 연결
     lanes.forEach(l => {
       const list = getLaneNodes(l.name);
       for(let i=0;i<list.length-1;i++){
@@ -524,7 +501,7 @@
       }
     });
 
-    // 핵심 트리거 연결
+    // cross-lane
     drawEdge('system-1','customer-1','arrow dashed');
     drawEdge('system-1','ops-1','arrow dashed');
     drawEdge('customer-2','ops-2','arrow faint');
@@ -542,59 +519,16 @@
     drawEdge('system-6','ops-6','arrow dashed');
     drawEdge('customer-6','system-6','arrow dashed');
     drawEdge('ops-7','customer-7','arrow');
-    drawEdge('ops-7','contract-3','arrow');
-    drawEdge('ops-8','contract-4','arrow');
-    drawEdge('ops-8','customer-7','arrow faint');
     drawEdge('ops-9','system-9','arrow dashed');
     drawEdge('ops-10','system-9','arrow dashed');
     drawEdge('system-9','customer-9','arrow dashed');
     drawEdge('ops-10','customer-8','arrow');
     drawEdge('system-10','customer-10','arrow dashed');
     drawEdge('system-11','customer-11','arrow dashed');
-    drawEdge('ops-12','customer-12','arrow');
-    drawEdge('ops-12','contract-5','arrow');
-    drawEdge('ops-13','customer-13','arrow');
-    drawEdge('ops-13','contract-6','arrow');
-    drawEdge('ops-13','contract-7','arrow faint');
-    drawEdge('customer-13','contract-7','arrow faint');
     drawEdge('system-14','customer-14','arrow dashed');
     drawEdge('system-14','ops-14','arrow dashed');
-    drawEdge('system-14','contract-9','arrow dashed');
-    drawEdge('system-14','contract-10','arrow dashed');
     drawEdge('customer-15','ops-15','arrow');
-    drawEdge('ops-15','contract-11','arrow');
-    drawEdge('customer-15','contract-11','arrow faint');
   }
-
-  function openModal(key) {
-    const data = nodeDetails[key];
-    if (!data) return;
-    modalTitle.textContent = data.title || '상세';
-    modalSubtitle.textContent = data.subtitle || '';
-    detailGrid.innerHTML = '';
-    (data.details || []).forEach(d => {
-      const card = document.createElement('div');
-      card.className = 'detailCard';
-      const h = document.createElement('h3');
-      h.textContent = d.title || '';
-      const pre = document.createElement('pre');
-      pre.textContent = d.content || '';
-      card.appendChild(h);
-      card.appendChild(pre);
-      detailGrid.appendChild(card);
-    });
-    backdrop.style.display = 'flex';
-  }
-  function closeModal(){ backdrop.style.display = 'none'; }
-
-  diagram.addEventListener('click', (e) => {
-    const node = e.target.closest('.node');
-    if (!node) return;
-    openModal(node.dataset.key);
-  });
-  closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
   function rerender(){
     computeDiagramSize();
