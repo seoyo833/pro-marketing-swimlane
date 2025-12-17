@@ -60,13 +60,6 @@
     .dot{width:10px;height:10px;border-radius:999px;background:#111827;}
     .dot.system{background:#0ea5e9;}
 
-    .topSteps{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;max-width:1200px}
-    .chip{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#f3f4f6;border:1px solid #e5e7eb;font-size:12px;line-height:1}
-
-    .rawtext{margin-top:10px;max-width:1200px}
-    .rawtext summary{cursor:pointer;color:#374151;font-weight:700}
-    .rawtext pre{white-space:pre-wrap;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin:10px 0 0;color:#111827;font-size:12px;line-height:1.55}
-
     /* 스크롤 컨테이너(가로 길게) */
     .diagramShell{
       margin-top:14px;
@@ -149,7 +142,6 @@
       word-break:keep-all;
     }
 
-    /* 미리보기는 3줄까지만(노드 높이 안정), 클릭하면 모달에서 원문 전체 */
     .node__meta{
       font-size:11px;
       color: var(--muted);
@@ -239,8 +231,8 @@
   <div class="wrap">
     <div class="header">
       <div>
-        <h1 class="title">PRO 마케팅 프로세스 · 신청 → 운영/정산 → 해지</h1>
-        <p class="subtitle">고객(몰어드민) / 운영자(마케팅센터) / 시스템 자동 / 후불계약 관점 4개 레인을 가로 15칸 그리드에 배치했습니다. 노드는 3줄 프리뷰로 높이를 맞추고, 클릭하면 각 항목의 원문 전체가 상세로 표시됩니다.</p>
+        <!-- ✅ 제목 수정 + ✅ 서브텍스트 삭제 -->
+        <h1 class="title">PRO 마케팅 프로세스</h1>
       </div>
       <div class="legend" aria-label="범례">
         <span><span class="dot"></span>사용자/운영자 노드</span>
@@ -293,10 +285,10 @@
         <div class="node__meta">(알림톡) 후불 한도 확정 &amp; 광고 세팅 안내 수신</div>
       </div>
 
-      <!-- ✅ 변경: 고객 8번 -->
+      <!-- (원문 유지: customer-8은 그대로) -->
       <div class="node" data-key="customer-8" data-step="8" style="grid-column:8">
-        <div class="node__title">8. 광고계정 생성 확인</div>
-        <div class="node__meta">(몰어드민) 광고계정 생성 완료 확인 &amp; 해지 버튼 노출</div>
+        <div class="node__title">8. 라이브 상태 확인</div>
+        <div class="node__meta">(몰어드민) 광고 진행중 안내 &amp; 해지 버튼 노출</div>
       </div>
 
       <div class="node" data-key="customer-9" data-step="9" style="grid-column:9">
@@ -478,57 +470,58 @@
           </div>
           <div class="lane__body">
 
-      <div class="node" data-key="contract-1" data-step="1" style="grid-column:1">
+      <!-- ✅ 후불계약 동선: 11번이 15번 아래로 오도록 재배치 -->
+      <div class="node" data-key="contract-1" data-step="1" style="grid-column:2">
         <div class="node__title">1. 가입/동의 기반 형성</div>
         <div class="node__meta">PRO 마케팅 신청 &amp; 약관 동의(신청 자격 충족 시)</div>
       </div>
 
-      <div class="node" data-key="contract-2" data-step="2" style="grid-column:2">
+      <div class="node" data-key="contract-2" data-step="2" style="grid-column:5">
         <div class="node__title">2. 결제수단 확보</div>
         <div class="node__meta">카드 등록(미등록 시 등록 요청) / 기등록 카드 확인</div>
       </div>
 
-      <div class="node" data-key="contract-3" data-step="3" style="grid-column:3">
+      <div class="node" data-key="contract-3" data-step="3" style="grid-column:7">
         <div class="node__title">3. 한도 확정</div>
         <div class="node__meta">“후불 한도 확정 &amp; 광고 세팅 안내” 수신</div>
       </div>
 
-      <div class="node" data-key="contract-4" data-step="4" style="grid-column:4">
+      <div class="node" data-key="contract-4" data-step="4" style="grid-column:8">
         <div class="node__title">4. 예산 반영</div>
         <div class="node__meta">(알림으로 반영 결과 확인)</div>
       </div>
 
-      <div class="node" data-key="contract-5" data-step="5" style="grid-column:5">
+      <div class="node" data-key="contract-5" data-step="5" style="grid-column:9">
         <div class="node__title">5. 월간 예산 반영(루틴)</div>
         <div class="node__meta">“후불 예산 반영 알림” 수신</div>
       </div>
 
-      <div class="node" data-key="contract-6" data-step="6" style="grid-column:6">
+      <div class="node" data-key="contract-6" data-step="6" style="grid-column:10">
         <div class="node__title">6. 한도 재산정(월 1회)</div>
         <div class="node__meta">감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인</div>
       </div>
 
-      <div class="node" data-key="contract-7" data-step="7" style="grid-column:7">
+      <div class="node" data-key="contract-7" data-step="7" style="grid-column:11">
         <div class="node__title">7. 증액 시 부속합의</div>
         <div class="node__meta">(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인</div>
       </div>
 
-      <div class="node" data-key="contract-8" data-step="8" style="grid-column:8">
+      <div class="node" data-key="contract-8" data-step="8" style="grid-column:12">
         <div class="node__title">8. 일예산 조정</div>
         <div class="node__meta">증액&amp;일예산 조정 안내 수신</div>
       </div>
 
-      <div class="node" data-key="contract-9" data-step="9" style="grid-column:9">
+      <div class="node" data-key="contract-9" data-step="9" style="grid-column:13">
         <div class="node__title">9. 정산(월 2회)</div>
         <div class="node__meta">정산 예정 안내 수신, PG차감/미수금 내역 확인</div>
       </div>
 
-      <div class="node" data-key="contract-10" data-step="10" style="grid-column:10">
+      <div class="node" data-key="contract-10" data-step="10" style="grid-column:14">
         <div class="node__title">10. 미수금 처리</div>
         <div class="node__meta">카드결제 안내 수신 또는 실패&amp;광고중단/추심 안내 수신</div>
       </div>
 
-      <div class="node" data-key="contract-11" data-step="11" style="grid-column:11">
+      <div class="node" data-key="contract-11" data-step="11" style="grid-column:15">
         <div class="node__title">11. 해지 시 정산 완료</div>
         <div class="node__meta">해지&amp;정산 완료 확인, 완료 알림 수신</div>
       </div>
@@ -556,69 +549,7 @@
   </div>
 
   <script>
-  const nodeDetails = {
-    "customer-1":{"title":"고객 · 1) 안내 수신 후 신청 진입","subtitle":"(알림톡) PRO 마케팅 소개 & 가입 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) PRO 마케팅 소개 & 가입 안내 수신"},{"title":"시스템","content":"대상자 선별 결과 기반 발송 이력 저장"},{"title":"운영자/센터","content":"문의 응대(선택)"}]},
-    "customer-2":{"title":"고객 · 2) 신청/약관 동의","subtitle":"(몰어드민) PRO 마케팅 신청 & 약관 동의","details":[{"title":"광고주(경험)","content":"(몰어드민) PRO 마케팅 신청 & 약관 동의"},{"title":"시스템","content":"신청 접수, 신청 상태 생성/저장"},{"title":"운영자/센터","content":"신청 가이드(선택)"}]},
-    "customer-3":{"title":"고객 · 3) 신청 완료 확인","subtitle":"(알림톡) 신청완료 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 신청완료 안내 수신"},{"title":"시스템","content":"FAS 접수/상태 업데이트"},{"title":"운영자/센터","content":"모니터링"}]},
-    "customer-4":{"title":"고객 · 4) 업종 심사 결과 확인","subtitle":"(알림톡) 진행 불가 안내 수신(해당 시)","details":[{"title":"광고주(경험)","content":"(알림톡) 진행 불가 안내 수신(해당 시)"},{"title":"시스템","content":"업종 심사 결과(YES/NO) 저장"},{"title":"운영자/센터","content":"ANPL팀 심사(진행불가 업종: 성인용품/이미테이션/기타)"}]},
-    "customer-5":{"title":"고객 · 5) 카드 등록 진행(필요 시)","subtitle":"(몰어드민) 광고 정보 확인 & 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고 정보 확인 & 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신"},{"title":"시스템","content":"카드 등록여부 상태 관리, 완료 여부 업데이트"},{"title":"운영자/센터","content":"카드등록 문의 대응(선택)"}]},
-    "customer-6":{"title":"고객 · 6) 광고 자산 연동 요청/점검","subtitle":"(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신"},{"title":"시스템","content":"자산 연동여부/완료 상태 업데이트"},{"title":"운영자/센터","content":"연동 지원/점검(선택)"}]},
-    "customer-7":{"title":"고객 · 7) 후불 한도/세팅 안내 확인","subtitle":"(알림톡) 후불 한도 확정 & 광고 세팅 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 후불 한도 확정 & 광고 세팅 안내 수신"},{"title":"시스템","content":"후불 한도 값 확정/저장, 예산 반영 상태 저장"},{"title":"운영자/센터","content":"운영자 한도 확정/예산 반영"}]},
-
-    /* ✅ 변경: customer-8 모달 데이터도 동일하게 수정 */
-    "customer-8":{"title":"고객 · 8) 광고계정 생성 확인","subtitle":"(몰어드민) 광고계정 생성 완료 확인 & 해지 버튼 노출","details":[
-      {"title":"광고주(경험)","content":"(몰어드민) 광고계정 생성 완료 확인 & 해지 버튼 노출"},
-      {"title":"시스템","content":"광고계정 생성 상태 전환 기록"},
-      {"title":"운영자/센터","content":"운영자 검수 후 ON"}
-    ]},
-
-    "customer-9":{"title":"고객 · 9) 광고 시작/세팅 내역 수신","subtitle":"(알림톡/이메일) 광고 시작 안내 & 세팅 내역 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고 시작 안내 & 세팅 내역 수신"},{"title":"시스템","content":"발송 이력/세팅 스냅샷 저장"}]},
-    "customer-10":{"title":"고객 · 10) 운영 루틴 결과 수신","subtitle":"(알림톡/이메일) 광고 세팅 & 필터링 내역 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고 세팅 & 필터링 내역 수신"},{"title":"시스템","content":"차마솔 시나리오 정기 실행 결과 저장"},{"title":"운영자/센터","content":"이슈 대응(선택)"}]},
-    "customer-11":{"title":"고객 · 11) 주간 보고서 수신","subtitle":"(알림톡/이메일) 광고보고서 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고보고서 수신"},{"title":"시스템","content":"CMC 광고보고서 주간 생성 결과 저장"},{"title":"운영자/센터","content":"보고서 세팅(운영자)"}]},
-    "customer-12":{"title":"고객 · 12) 월간 예산 반영 알림 수신","subtitle":"(알림톡) 후불 예산 반영 알림 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 후불 예산 반영 알림 수신"},{"title":"시스템","content":"예산 반영 결과 저장"},{"title":"운영자/센터","content":"운영자 반영"}]},
-    "customer-13":{"title":"고객 · 13) 한도 재산정(증/감액) 대응","subtitle":"증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신","details":[{"title":"광고주(경험)","content":"증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신"},{"title":"시스템","content":"한도 증/감액 상태 저장, 증액은 ‘부속합의 동의’ 결과 반영"},{"title":"운영자/센터","content":"증액 적용/감액 적용(운영자), 일예산 조정(시스템)"}]},
-    "customer-14":{"title":"고객 · 14) 후불 정산/미수금 확인","subtitle":"(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&중단/채권추심 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&중단/채권추심 안내 수신"},{"title":"시스템","content":"정산금 산정, PG차감 vs 미수금 분기, 미수금 카드결제 시도 결과 저장"},{"title":"운영자/센터","content":"미수금 시 광고 중단/추심 진행(운영자)"}]},
-    "customer-15":{"title":"고객 · 15) 해지 요청/완료","subtitle":"(몰어드민) 1:1 문의/CTI 접수 → 해지&정산 안내/완료 확인, (알림톡) 정산완료&해지완료 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 1:1 문의/CTI 접수 → 해지&정산 안내/완료 확인, (알림톡) 정산완료&해지완료 수신"},{"title":"시스템","content":"해지 상태 전환/정산 완료 처리"},{"title":"운영자/센터","content":"해지 요청 확인→광고중단→정산→해지 처리(운영자)"}]},
-
-    /* 이하 ops/system/contract는 원문 그대로 */
-    "ops-1":{"title":"내부 · 1) 대상자 선별/안내 발송","subtitle":"(운영/시스템) 알림 발송 운영","details":[{"title":"운영자/마케팅센터","content":"(운영/시스템) 알림 발송 운영"},{"title":"시스템/저장","content":"대상자 조건 적용 및 발송 로그 저장"},{"title":"비고","content":"조건/캠페인 점검"}]},
-    "ops-2":{"title":"내부 · 2) 신청 접수 관리","subtitle":"(FAS) PRO 마케팅 신청 접수","details":[{"title":"운영자/마케팅센터","content":"(FAS) PRO 마케팅 신청 접수"},{"title":"시스템/저장","content":"신청 상태 업데이트"},{"title":"비고","content":"모니터링"}]},
-    "ops-3":{"title":"내부 · 3) 업종 심사","subtitle":"(심사 프로세스)","details":[{"title":"운영자/마케팅센터","content":"(심사 프로세스)"},{"title":"시스템/저장","content":"심사 결과 저장"},{"title":"비고","content":"ANPL팀 심사/판정"}]},
-    "ops-4":{"title":"내부 · 4) 카드 등록 상태 관리","subtitle":"(상태 확인)","details":[{"title":"운영자/마케팅센터","content":"(상태 확인)"},{"title":"시스템/저장","content":"카드 등록여부 상태 관리/리마인드 발송"},{"title":"비고","content":"문의 대응"}]},
-    "ops-5":{"title":"내부 · 5) 담당자 지정","subtitle":"(운영자) 담당자 지정","details":[{"title":"운영자/마케팅센터","content":"(운영자) 담당자 지정"},{"title":"시스템/저장","content":"담당자 매핑 저장"},{"title":"비고","content":"배정"}]},
-    "ops-6":{"title":"내부 · 6) 광고 자산 연동(미연동 시)","subtitle":"(운영자) CMC 매체별 광고 신청","details":[{"title":"운영자/마케팅센터","content":"(운영자) CMC 매체별 광고 신청"},{"title":"시스템/저장","content":"연동 상태 업데이트"},{"title":"비고","content":"연동 지원/점검"}]},
-    "ops-7":{"title":"내부 · 7) 후불 한도 확정","subtitle":"(운영자) 후불 한도 확정","details":[{"title":"운영자/마케팅센터","content":"(운영자) 후불 한도 확정"},{"title":"시스템/저장","content":"한도 값 저장"},{"title":"비고","content":"확정"}]},
-    "ops-8":{"title":"내부 · 8) 후불 예산 반영","subtitle":"(운영자) 후불 예산 반영","details":[{"title":"운영자/마케팅센터","content":"(운영자) 후불 예산 반영"},{"title":"시스템/저장","content":"예산 반영 결과 저장"},{"title":"비고","content":"반영"}]},
-    "ops-9":{"title":"내부 · 9) 차마솔 계정/시나리오 설정","subtitle":"(운영자) 차마솔 계정 등록 & 시나리오 설정","details":[{"title":"운영자/마케팅센터","content":"(운영자) 차마솔 계정 등록 & 시나리오 설정"},{"title":"시스템/저장","content":"설정값 저장"},{"title":"비고","content":"설정"}]},
-    "ops-10":{"title":"내부 · 10) 세팅 검수 & 광고 ON","subtitle":"(운영자) 세팅 결과 검수 & ON","details":[{"title":"운영자/마케팅센터","content":"(운영자) 세팅 결과 검수 & ON"},{"title":"시스템/저장","content":"(시스템) 차마솔 광고 세팅 수행/결과 저장"},{"title":"비고","content":"최종 검수/ON"}]},
-    "ops-11":{"title":"내부 · 11) 보고서 세팅","subtitle":"(운영자) CMC 광고보고서 세팅","details":[{"title":"운영자/마케팅센터","content":"(운영자) CMC 광고보고서 세팅"},{"title":"시스템/저장","content":"(시스템) 주간 보고서 생성/발송"},{"title":"비고","content":"항목/대상 관리"}]},
-    "ops-12":{"title":"내부 · 12) 월간 예산 루틴 반영","subtitle":"(운영자) 월간 예산 반영 대상 확인/반영","details":[{"title":"운영자/마케팅센터","content":"(운영자) 월간 예산 반영 대상 확인/반영"},{"title":"시스템/저장","content":"반영 결과 저장/알림 발송"},{"title":"비고","content":"대상 확인"}]},
-    "ops-13":{"title":"내부 · 13) 한도 재산정/증액 처리","subtitle":"(운영자) 재산정 결과 반영, 증액 적용","details":[{"title":"운영자/마케팅센터","content":"(운영자) 재산정 결과 반영, 증액 적용"},{"title":"시스템/저장","content":"증액 시 부속합의 동의 상태 반영 + 차마솔 일예산 조정"},{"title":"비고","content":"증액 적용/감액 적용"}]},
-    "ops-14":{"title":"내부 · 14) 정산/미수금/추심","subtitle":"(운영자) 미수금 대상 확인, 광고 중단 처리, 추심 절차 진행","details":[{"title":"운영자/마케팅센터","content":"(운영자) 미수금 대상 확인, 광고 중단 처리, 추심 절차 진행"},{"title":"시스템/저장","content":"(시스템) 정산금 산정/PG차감/미수금/카드결제 시도/알림"},{"title":"비고","content":"중단/추심"}]},
-    "ops-15":{"title":"내부 · 15) 해지 처리","subtitle":"(운영자) 해지 요청 확인/해지 처리","details":[{"title":"운영자/마케팅센터","content":"(운영자) 해지 요청 확인/해지 처리"},{"title":"시스템/저장","content":"해지 완료/정산 완료 상태 반영 및 알림"},{"title":"비고","content":"중단→정산→해지"}]},
-
-    "system-1":{"title":"시스템 AUTO · 대상자 선별 & 알림톡 발송","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"조건 기반 대상자 리스트 생성 → “PRO 마케팅 소개 & 가입 안내” 발송 로그 적재"}]},
-    "system-3":{"title":"시스템 AUTO · 신청 접수 상태 관리(FAS 연계)","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"신청 접수/완료 상태 업데이트 → “신청완료 안내” 발송"}]},
-    "system-4":{"title":"시스템 AUTO · 업종 심사 결과 반영 및 진행불가 알림 발송","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"심사 결과가 NO인 경우 → “진행 불가 안내” 발송 및 종료 처리"}]},
-    "system-5":{"title":"시스템 AUTO · 카드 등록 상태 체크 & 리마인드 발송","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"카드 미등록이면 “카드 등록 요청 안내” 발송\n기등록이면 “기등록 카드 사용 안내” 발송"}]},
-    "system-6":{"title":"시스템 AUTO · 광고자산 연동 상태 체크 & 요청/점검 알림","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"미연동이면 “자산 연동 요청 안내” 발송\n연동완료면 “연동 점검중 안내” 발송(점검 단계로 이동)"}]},
-    "system-9":{"title":"시스템 AUTO · 차마솔 광고 세팅 자동 수행","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"운영자 설정값(계정/시나리오)을 입력으로 받아 광고 세팅 실행\n결과 저장 → 광고 시작 안내/세팅 내역 발송 트리거"}]},
-    "system-10":{"title":"시스템 AUTO · 차마솔 시나리오 정기 실행(운영 루틴)","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"정기 실행 → “광고 세팅 & 필터링 내역” 생성/발송"}]},
-    "system-11":{"title":"시스템 AUTO · CMC 광고보고서 주간 생성(리포트 루틴)","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"주간 생성 → “광고보고서” 발송\n(포함 항목: 광고비 사용현황, 광고 성과(유입/전환), 광고 소재 링크)"}]},
-    "system-14":{"title":"시스템 AUTO · 후불 정산 금액 산정(월 2회) & PG차감/미수금 분기 + 카드결제 성공/실패 처리","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"PG차감 가능: “PG매출 차감 안내” 발송\nPG차감 불가: “미수금 발생” 처리 후 카드결제 시도 분기\n성공: “미수금 카드결제 안내” 발송\n실패: “카드결제 실패 & 광고 중단 안내” + “채권 추심 안내” 발송(운영 처리로 연결)"}]},
-
-    "contract-1":{"title":"후불계약 · 1) 가입/동의 기반 형성","subtitle":"PRO 마케팅 신청 & 약관 동의(신청 자격 충족 시)","details":[{"title":"광고주(경험)","content":"PRO 마케팅 신청 & 약관 동의(신청 자격 충족 시)"},{"title":"운영/처리","content":"신청 접수 관리"},{"title":"시스템","content":"신청 상태 생성/저장"}]},
-    "contract-2":{"title":"후불계약 · 2) 결제수단 확보","subtitle":"카드 등록(미등록 시 등록 요청) / 기등록 카드 확인","details":[{"title":"광고주(경험)","content":"카드 등록(미등록 시 등록 요청) / 기등록 카드 확인"},{"title":"운영/처리","content":"카드 상태 관리"},{"title":"시스템","content":"카드 등록 리마인드 발송/완료 상태 반영"}]},
-    "contract-3":{"title":"후불계약 · 3) 한도 확정","subtitle":"“후불 한도 확정 & 광고 세팅 안내” 수신","details":[{"title":"광고주(경험)","content":"“후불 한도 확정 & 광고 세팅 안내” 수신"},{"title":"운영/처리","content":"후불 한도 확정"},{"title":"시스템","content":"한도 값 저장"}]},
-    "contract-4":{"title":"후불계약 · 4) 예산 반영","subtitle":"(알림으로 반영 결과 확인)","details":[{"title":"광고주(경험)","content":"(알림으로 반영 결과 확인)"},{"title":"운영/처리","content":"후불 예산 반영"},{"title":"시스템","content":"예산 반영 상태 저장/알림 발송"}]},
-    "contract-5":{"title":"후불계약 · 5) 월간 예산 반영(루틴)","subtitle":"“후불 예산 반영 알림” 수신","details":[{"title":"광고주(경험)","content":"“후불 예산 반영 알림” 수신"},{"title":"운영/처리","content":"대상 확인 후 반영"},{"title":"시스템","content":"알림 발송/로그"}]},
-    "contract-6":{"title":"후불계약 · 6) 한도 재산정(월 1회)","subtitle":"감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인","details":[{"title":"광고주(경험)","content":"감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인"},{"title":"운영/처리","content":"재산정 수행 및 증/감액 적용"},{"title":"시스템","content":"재산정 결과 저장"}]},
-    "contract-7":{"title":"후불계약 · 7) 증액 시 부속합의","subtitle":"(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인","details":[{"title":"광고주(경험)","content":"(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인"},{"title":"운영/처리","content":"동의 결과 확인/증액 적용"},{"title":"시스템","content":"동의(YES) 시 일예산 조정 트리거"}]},
-    "contract-8":{"title":"후불계약 · 8) 일예산 조정","subtitle":"증액&일예산 조정 안내 수신","details":[{"title":"광고주(경험)","content":"증액&일예산 조정 안내 수신"},{"title":"운영/처리","content":"증액 적용 후 운영 확인"},{"title":"시스템","content":"차마솔 일예산 조정 수행"}]},
-    "contract-9":{"title":"후불계약 · 9) 정산(월 2회)","subtitle":"정산 예정 안내 수신, PG차감/미수금 내역 확인","details":[{"title":"광고주(경험)","content":"정산 예정 안내 수신, PG차감/미수금 내역 확인"},{"title":"운영/처리","content":"이슈 모니터링"},{"title":"시스템","content":"정산금 산정 및 PG차감/미수금 분기"}]},
-    "contract-10":{"title":"후불계약 · 10) 미수금 처리","subtitle":"카드결제 안내 수신 또는 실패&광고중단/추심 안내 수신","details":[{"title":"광고주(경험)","content":"카드결제 안내 수신 또는 실패&광고중단/추심 안내 수신"},{"title":"운영/처리","content":"광고 중단/추심 절차 진행"},{"title":"시스템","content":"카드결제 시도, 실패 시 추심 안내 발송"}]},
-    "contract-11":{"title":"후불계약 · 11) 해지 시 정산 완료","subtitle":"해지&정산 완료 확인, 완료 알림 수신","details":[{"title":"광고주(경험)","content":"해지&정산 완료 확인, 완료 알림 수신"},{"title":"운영/처리","content":"광고 중단→정산→해지 처리"},{"title":"시스템","content":"해지 완료/정산 완료 상태 반영"}]}
-  };
+  const nodeDetails = {"customer-1":{"title":"고객 · 1) 안내 수신 후 신청 진입","subtitle":"(알림톡) PRO 마케팅 소개 & 가입 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) PRO 마케팅 소개 & 가입 안내 수신"},{"title":"시스템","content":"대상자 선별 결과 기반 발송 이력 저장"},{"title":"운영자/센터","content":"문의 응대(선택)"}]},"customer-2":{"title":"고객 · 2) 신청/약관 동의","subtitle":"(몰어드민) PRO 마케팅 신청 & 약관 동의","details":[{"title":"광고주(경험)","content":"(몰어드민) PRO 마케팅 신청 & 약관 동의"},{"title":"시스템","content":"신청 접수, 신청 상태 생성/저장"},{"title":"운영자/센터","content":"신청 가이드(선택)"}]},"customer-3":{"title":"고객 · 3) 신청 완료 확인","subtitle":"(알림톡) 신청완료 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 신청완료 안내 수신"},{"title":"시스템","content":"FAS 접수/상태 업데이트"},{"title":"운영자/센터","content":"모니터링"}]},"customer-4":{"title":"고객 · 4) 업종 심사 결과 확인","subtitle":"(알림톡) 진행 불가 안내 수신(해당 시)","details":[{"title":"광고주(경험)","content":"(알림톡) 진행 불가 안내 수신(해당 시)"},{"title":"시스템","content":"업종 심사 결과(YES/NO) 저장"},{"title":"운영자/센터","content":"ANPL팀 심사(진행불가 업종: 성인용품/이미테이션/기타)"}]},"customer-5":{"title":"고객 · 5) 카드 등록 진행(필요 시)","subtitle":"(몰어드민) 광고 정보 확인 & 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고 정보 확인 & 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신"},{"title":"시스템","content":"카드 등록여부 상태 관리, 완료 여부 업데이트"},{"title":"운영자/센터","content":"카드등록 문의 대응(선택)"}]},"customer-6":{"title":"고객 · 6) 광고 자산 연동 요청/점검","subtitle":"(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신"},{"title":"시스템","content":"자산 연동여부/완료 상태 업데이트"},{"title":"운영자/센터","content":"연동 지원/점검(선택)"}]},"customer-7":{"title":"고객 · 7) 후불 한도/세팅 안내 확인","subtitle":"(알림톡) 후불 한도 확정 & 광고 세팅 안내 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 후불 한도 확정 & 광고 세팅 안내 수신"},{"title":"시스템","content":"후불 한도 값 확정/저장, 예산 반영 상태 저장"},{"title":"운영자/센터","content":"운영자 한도 확정/예산 반영"}]},"customer-8":{"title":"고객 · 8) 라이브 상태 확인","subtitle":"(몰어드민) 광고 진행중 안내 & 해지 버튼 노출","details":[{"title":"광고주(경험)","content":"(몰어드민) 광고 진행중 안내 & 해지 버튼 노출"},{"title":"시스템","content":"라이브 상태 전환 기록"},{"title":"운영자/센터","content":"운영자 검수 후 ON"}]},"customer-9":{"title":"고객 · 9) 광고 시작/세팅 내역 수신","subtitle":"(알림톡/이메일) 광고 시작 안내 & 세팅 내역 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고 시작 안내 & 세팅 내역 수신"},{"title":"시스템","content":"발송 이력/세팅 스냅샷 저장"}]},"customer-10":{"title":"고객 · 10) 운영 루틴 결과 수신","subtitle":"(알림톡/이메일) 광고 세팅 & 필터링 내역 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고 세팅 & 필터링 내역 수신"},{"title":"시스템","content":"차마솔 시나리오 정기 실행 결과 저장"},{"title":"운영자/센터","content":"이슈 대응(선택)"}]},"customer-11":{"title":"고객 · 11) 주간 보고서 수신","subtitle":"(알림톡/이메일) 광고보고서 수신","details":[{"title":"광고주(경험)","content":"(알림톡/이메일) 광고보고서 수신"},{"title":"시스템","content":"CMC 광고보고서 주간 생성 결과 저장"},{"title":"운영자/센터","content":"보고서 세팅(운영자)"}]},"customer-12":{"title":"고객 · 12) 월간 예산 반영 알림 수신","subtitle":"(알림톡) 후불 예산 반영 알림 수신","details":[{"title":"광고주(경험)","content":"(알림톡) 후불 예산 반영 알림 수신"},{"title":"시스템","content":"예산 반영 결과 저장"},{"title":"운영자/센터","content":"운영자 반영"}]},"customer-13":{"title":"고객 · 13) 한도 재산정(증/감액) 대응","subtitle":"증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신","details":[{"title":"광고주(경험)","content":"증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신"},{"title":"시스템","content":"한도 증/감액 상태 저장, 증액은 ‘부속합의 동의’ 결과 반영"},{"title":"운영자/센터","content":"증액 적용/감액 적용(운영자), 일예산 조정(시스템)"}]},"customer-14":{"title":"고객 · 14) 후불 정산/미수금 확인","subtitle":"(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&중단/채권추심 안내 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&중단/채권추심 안내 수신"},{"title":"시스템","content":"정산금 산정, PG차감 vs 미수금 분기, 미수금 카드결제 시도 결과 저장"},{"title":"운영자/센터","content":"미수금 시 광고 중단/추심 진행(운영자)"}]},"customer-15":{"title":"고객 · 15) 해지 요청/완료","subtitle":"(몰어드민) 1:1 문의/CTI 접수 → 해지&정산 안내/완료 확인, (알림톡) 정산완료&해지완료 수신","details":[{"title":"광고주(경험)","content":"(몰어드민) 1:1 문의/CTI 접수 → 해지&정산 안내/완료 확인, (알림톡) 정산완료&해지완료 수신"},{"title":"시스템","content":"해지 상태 전환/정산 완료 처리"},{"title":"운영자/센터","content":"해지 요청 확인→광고중단→정산→해지 처리(운영자)"}]},"ops-1":{"title":"내부 · 1) 대상자 선별/안내 발송","subtitle":"(운영/시스템) 알림 발송 운영","details":[{"title":"운영자/마케팅센터","content":"(운영/시스템) 알림 발송 운영"},{"title":"시스템/저장","content":"대상자 조건 적용 및 발송 로그 저장"},{"title":"비고","content":"조건/캠페인 점검"}]},"ops-2":{"title":"내부 · 2) 신청 접수 관리","subtitle":"(FAS) PRO 마케팅 신청 접수","details":[{"title":"운영자/마케팅센터","content":"(FAS) PRO 마케팅 신청 접수"},{"title":"시스템/저장","content":"신청 상태 업데이트"},{"title":"비고","content":"모니터링"}]},"ops-3":{"title":"내부 · 3) 업종 심사","subtitle":"(심사 프로세스)","details":[{"title":"운영자/마케팅센터","content":"(심사 프로세스)"},{"title":"시스템/저장","content":"심사 결과 저장"},{"title":"비고","content":"ANPL팀 심사/판정"}]},"ops-4":{"title":"내부 · 4) 카드 등록 상태 관리","subtitle":"(상태 확인)","details":[{"title":"운영자/마케팅센터","content":"(상태 확인)"},{"title":"시스템/저장","content":"카드 등록여부 상태 관리/리마인드 발송"},{"title":"비고","content":"문의 대응"}]},"ops-5":{"title":"내부 · 5) 담당자 지정","subtitle":"(운영자) 담당자 지정","details":[{"title":"운영자/마케팅센터","content":"(운영자) 담당자 지정"},{"title":"시스템/저장","content":"담당자 매핑 저장"},{"title":"비고","content":"배정"}]},"ops-6":{"title":"내부 · 6) 광고 자산 연동(미연동 시)","subtitle":"(운영자) CMC 매체별 광고 신청","details":[{"title":"운영자/마케팅센터","content":"(운영자) CMC 매체별 광고 신청"},{"title":"시스템/저장","content":"연동 상태 업데이트"},{"title":"비고","content":"연동 지원/점검"}]},"ops-7":{"title":"내부 · 7) 후불 한도 확정","subtitle":"(운영자) 후불 한도 확정","details":[{"title":"운영자/마케팅센터","content":"(운영자) 후불 한도 확정"},{"title":"시스템/저장","content":"한도 값 저장"},{"title":"비고","content":"확정"}]},"ops-8":{"title":"내부 · 8) 후불 예산 반영","subtitle":"(운영자) 후불 예산 반영","details":[{"title":"운영자/마케팅센터","content":"(운영자) 후불 예산 반영"},{"title":"시스템/저장","content":"예산 반영 결과 저장"},{"title":"비고","content":"반영"}]},"ops-9":{"title":"내부 · 9) 차마솔 계정/시나리오 설정","subtitle":"(운영자) 차마솔 계정 등록 & 시나리오 설정","details":[{"title":"운영자/마케팅센터","content":"(운영자) 차마솔 계정 등록 & 시나리오 설정"},{"title":"시스템/저장","content":"설정값 저장"},{"title":"비고","content":"설정"}]},"ops-10":{"title":"내부 · 10) 세팅 검수 & 광고 ON","subtitle":"(운영자) 세팅 결과 검수 & ON","details":[{"title":"운영자/마케팅센터","content":"(운영자) 세팅 결과 검수 & ON"},{"title":"시스템/저장","content":"(시스템) 차마솔 광고 세팅 수행/결과 저장"},{"title":"비고","content":"최종 검수/ON"}]},"ops-11":{"title":"내부 · 11) 보고서 세팅","subtitle":"(운영자) CMC 광고보고서 세팅","details":[{"title":"운영자/마케팅센터","content":"(운영자) CMC 광고보고서 세팅"},{"title":"시스템/저장","content":"(시스템) 주간 보고서 생성/발송"},{"title":"비고","content":"항목/대상 관리"}]},"ops-12":{"title":"내부 · 12) 월간 예산 루틴 반영","subtitle":"(운영자) 월간 예산 반영 대상 확인/반영","details":[{"title":"운영자/마케팅센터","content":"(운영자) 월간 예산 반영 대상 확인/반영"},{"title":"시스템/저장","content":"반영 결과 저장/알림 발송"},{"title":"비고","content":"대상 확인"}]},"ops-13":{"title":"내부 · 13) 한도 재산정/증액 처리","subtitle":"(운영자) 재산정 결과 반영, 증액 적용","details":[{"title":"운영자/마케팅센터","content":"(운영자) 재산정 결과 반영, 증액 적용"},{"title":"시스템/저장","content":"증액 시 부속합의 동의 상태 반영 + 차마솔 일예산 조정"},{"title":"비고","content":"증액 적용/감액 적용"}]},"ops-14":{"title":"내부 · 14) 정산/미수금/추심","subtitle":"(운영자) 미수금 대상 확인, 광고 중단 처리, 추심 절차 진행","details":[{"title":"운영자/마케팅센터","content":"(운영자) 미수금 대상 확인, 광고 중단 처리, 추심 절차 진행"},{"title":"시스템/저장","content":"(시스템) 정산금 산정/PG차감/미수금/카드결제 시도/알림"},{"title":"비고","content":"중단/추심"}]},"ops-15":{"title":"내부 · 15) 해지 처리","subtitle":"(운영자) 해지 요청 확인/해지 처리","details":[{"title":"운영자/마케팅센터","content":"(운영자) 해지 요청 확인/해지 처리"},{"title":"시스템/저장","content":"해지 완료/정산 완료 상태 반영 및 알림"},{"title":"비고","content":"중단→정산→해지"}]},"system-1":{"title":"시스템 AUTO · 대상자 선별 & 알림톡 발송","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"조건 기반 대상자 리스트 생성 → “PRO 마케팅 소개 & 가입 안내” 발송 로그 적재"}]},"system-3":{"title":"시스템 AUTO · 신청 접수 상태 관리(FAS 연계)","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"신청 접수/완료 상태 업데이트 → “신청완료 안내” 발송"}]},"system-4":{"title":"시스템 AUTO · 업종 심사 결과 반영 및 진행불가 알림 발송","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"심사 결과가 NO인 경우 → “진행 불가 안내” 발송 및 종료 처리"}]},"system-5":{"title":"시스템 AUTO · 카드 등록 상태 체크 & 리마인드 발송","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"카드 미등록이면 “카드 등록 요청 안내” 발송\n기등록이면 “기등록 카드 사용 안내” 발송"}]},"system-6":{"title":"시스템 AUTO · 광고자산 연동 상태 체크 & 요청/점검 알림","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"미연동이면 “자산 연동 요청 안내” 발송\n연동완료면 “연동 점검중 안내” 발송(점검 단계로 이동)"}]},"system-9":{"title":"시스템 AUTO · 차마솔 광고 세팅 자동 수행","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"운영자 설정값(계정/시나리오)을 입력으로 받아 광고 세팅 실행\n결과 저장 → 광고 시작 안내/세팅 내역 발송 트리거"}]},"system-10":{"title":"시스템 AUTO · 차마솔 시나리오 정기 실행(운영 루틴)","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"정기 실행 → “광고 세팅 & 필터링 내역” 생성/발송"}]},"system-11":{"title":"시스템 AUTO · CMC 광고보고서 주간 생성(리포트 루틴)","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"주간 생성 → “광고보고서” 발송\n(포함 항목: 광고비 사용현황, 광고 성과(유입/전환), 광고 소재 링크)"}]},"system-14":{"title":"시스템 AUTO · 후불 정산 금액 산정(월 2회) & PG차감/미수금 분기 + 카드결제 성공/실패 처리","subtitle":"자동 노드","details":[{"title":"자동 수행/발송","content":"PG차감 가능: “PG매출 차감 안내” 발송\nPG차감 불가: “미수금 발생” 처리 후 카드결제 시도 분기\n성공: “미수금 카드결제 안내” 발송\n실패: “카드결제 실패 & 광고 중단 안내” + “채권 추심 안내” 발송(운영 처리로 연결)"}]},"contract-1":{"title":"후불계약 · 1) 가입/동의 기반 형성","subtitle":"PRO 마케팅 신청 & 약관 동의(신청 자격 충족 시)","details":[{"title":"광고주(경험)","content":"PRO 마케팅 신청 & 약관 동의(신청 자격 충족 시)"},{"title":"운영/처리","content":"신청 접수 관리"},{"title":"시스템","content":"신청 상태 생성/저장"}]},"contract-2":{"title":"후불계약 · 2) 결제수단 확보","subtitle":"카드 등록(미등록 시 등록 요청) / 기등록 카드 확인","details":[{"title":"광고주(경험)","content":"카드 등록(미등록 시 등록 요청) / 기등록 카드 확인"},{"title":"운영/처리","content":"카드 상태 관리"},{"title":"시스템","content":"카드 등록 리마인드 발송/완료 상태 반영"}]},"contract-3":{"title":"후불계약 · 3) 한도 확정","subtitle":"“후불 한도 확정 & 광고 세팅 안내” 수신","details":[{"title":"광고주(경험)","content":"“후불 한도 확정 & 광고 세팅 안내” 수신"},{"title":"운영/처리","content":"후불 한도 확정"},{"title":"시스템","content":"한도 값 저장"}]},"contract-4":{"title":"후불계약 · 4) 예산 반영","subtitle":"(알림으로 반영 결과 확인)","details":[{"title":"광고주(경험)","content":"(알림으로 반영 결과 확인)"},{"title":"운영/처리","content":"후불 예산 반영"},{"title":"시스템","content":"예산 반영 상태 저장/알림 발송"}]},"contract-5":{"title":"후불계약 · 5) 월간 예산 반영(루틴)","subtitle":"“후불 예산 반영 알림” 수신","details":[{"title":"광고주(경험)","content":"“후불 예산 반영 알림” 수신"},{"title":"운영/처리","content":"대상 확인 후 반영"},{"title":"시스템","content":"알림 발송/로그"}]},"contract-6":{"title":"후불계약 · 6) 한도 재산정(월 1회)","subtitle":"감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인","details":[{"title":"광고주(경험)","content":"감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인"},{"title":"운영/처리","content":"재산정 수행 및 증/감액 적용"},{"title":"시스템","content":"재산정 결과 저장"}]},"contract-7":{"title":"후불계약 · 7) 증액 시 부속합의","subtitle":"(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인","details":[{"title":"광고주(경험)","content":"(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인"},{"title":"운영/처리","content":"동의 결과 확인/증액 적용"},{"title":"시스템","content":"동의(YES) 시 일예산 조정 트리거"}]},"contract-8":{"title":"후불계약 · 8) 일예산 조정","subtitle":"증액&일예산 조정 안내 수신","details":[{"title":"광고주(경험)","content":"증액&일예산 조정 안내 수신"},{"title":"운영/처리","content":"증액 적용 후 운영 확인"},{"title":"시스템","content":"차마솔 일예산 조정 수행"}]},"contract-9":{"title":"후불계약 · 9) 정산(월 2회)","subtitle":"정산 예정 안내 수신, PG차감/미수금 내역 확인","details":[{"title":"광고주(경험)","content":"정산 예정 안내 수신, PG차감/미수금 내역 확인"},{"title":"운영/처리","content":"이슈 모니터링"},{"title":"시스템","content":"정산금 산정 및 PG차감/미수금 분기"}]},"contract-10":{"title":"후불계약 · 10) 미수금 처리","subtitle":"카드결제 안내 수신 또는 실패&광고중단/추심 안내 수신","details":[{"title":"광고주(경험)","content":"카드결제 안내 수신 또는 실패&광고중단/추심 안내 수신"},{"title":"운영/처리","content":"광고 중단/추심 절차 진행"},{"title":"시스템","content":"카드결제 시도, 실패 시 추심 안내 발송"}]},"contract-11":{"title":"후불계약 · 11) 해지 시 정산 완료","subtitle":"해지&정산 완료 확인, 완료 알림 수신","details":[{"title":"광고주(경험)","content":"해지&정산 완료 확인, 완료 알림 수신"},{"title":"운영/처리","content":"광고 중단→정산→해지 처리"},{"title":"시스템","content":"해지 완료/정산 완료 상태 반영"}]}};
 
   const diagram = document.getElementById('diagram');
   const svg = document.getElementById('lines');
@@ -715,21 +646,19 @@
     };
   }
 
-  /* ✅ 같은 레인(순차) 화살표: 노드 아래로 지나가게 라우팅 */
+  /* ✅ 같은 레인(순차) 화살표: 노드 아래로 지나가게 */
   function svgLaneFlow(fromEl, toEl, cls='arrow'){
     const diagramRect = diagram.getBoundingClientRect();
     const a = rectInDiagram(fromEl, diagramRect);
     const b = rectInDiagram(toEl, diagramRect);
     const laneR = laneRectInDiagram(fromEl, diagramRect);
 
-    // 노드 아래 y (레인 안에서 클램프)
     const yRaw = a.bottom + 16;
     const y = Math.min(yRaw, laneR.bottom - 12);
 
     const x1 = a.right + 4;
     const x2 = b.left - 6;
 
-    // 가로 곡선(짧게)
     const dist = Math.abs(x2 - x1);
     const dx = Math.max(30, Math.min(160, dist * 0.35));
 
@@ -745,35 +674,28 @@
     return p;
   }
 
-  /* ✅ 레인 간 연결: 레인 경계(빈 공간)를 viaY로 사용 → 노드 위를 지나가지 않음 */
-  function svgCrossLane(fromEl, toEl, cls='arrow'){
-    const diagramRect = diagram.getBoundingClientRect();
-    const a = rectInDiagram(fromEl, diagramRect);
-    const b = rectInDiagram(toEl, diagramRect);
-    const la = laneRectInDiagram(fromEl, diagramRect);
-    const lb = laneRectInDiagram(toEl, diagramRect);
-
-    // viaY: 두 레인의 경계 중간(빈 공간)
-    const viaY = (la.bottom + lb.top) / 2;
-
-    // 시작/끝점은 "노드 Edge"로 맞춰서 정확히 가리키게
-    const startX = a.cx;
-    const endX = b.cx;
-
-    const startY = (b.cy >= a.cy) ? (a.bottom + 6) : (a.top - 6);
-    const endY   = (b.cy >= a.cy) ? (b.top - 6)     : (b.bottom + 6);
-
+  /* 레인 간 연결: 기본은 기존 곡선 스타일 유지 */
+  function svgLine(x1,y1,x2,y2, cls='arrow') {
     const p = document.createElementNS('http://www.w3.org/2000/svg','path');
-
-    // 직교 라인(꺾임) — 노드 위 통과 방지
-    const d = `M ${startX} ${startY} L ${startX} ${viaY} L ${endX} ${viaY} L ${endX} ${endY}`;
+    const dir = (x2 >= x1) ? 1 : -1;
+    const dist = Math.abs(x2 - x1);
+    const dx = Math.max(30, Math.min(160, dist * 0.35)) * dir;
+    const d = `M ${x1} ${y1} C ${x1+dx} ${y1}, ${x2-dx} ${y2}, ${x2} ${y2}`;
     p.setAttribute('d', d);
     p.setAttribute('class', cls);
+    p.setAttribute('marker-end','url(#arrowhead)');
+    return p;
+  }
 
-    if ((cls || '').includes('dashed')) p.setAttribute('marker-end','url(#arrowheadBlue)');
-    else if ((cls || '').includes('faint')) p.setAttribute('marker-end','url(#arrowheadFaint)');
-    else p.setAttribute('marker-end','url(#arrowhead)');
-
+  function svgLineV(x,y1,y2, cls='arrow') {
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    const dir = (y2 >= y1) ? 1 : -1;
+    const dist = Math.abs(y2 - y1);
+    const dy = Math.max(30, Math.min(160, dist * 0.35)) * dir;
+    const d = `M ${x} ${y1} C ${x} ${y1+dy}, ${x} ${y2-dy}, ${x} ${y2}`;
+    p.setAttribute('d', d);
+    p.setAttribute('class', cls);
+    p.setAttribute('marker-end','url(#arrowhead)');
     return p;
   }
 
@@ -783,41 +705,46 @@
     if (!from || !to) return;
 
     const diagramRect = diagram.getBoundingClientRect();
-    const a = rectInDiagram(from, diagramRect);
-    const b = rectInDiagram(to, diagramRect);
+    const a = from.getBoundingClientRect();
+    const b = to.getBoundingClientRect();
 
-    // 같은 레인인데 x가 거의 같은 경우: 세로로 정확히 연결
-    const fromLane = from.closest('.lane')?.dataset?.lane;
-    const toLane = to.closest('.lane')?.dataset?.lane;
+    const axc = ((a.left + a.right) / 2) - diagramRect.left;
+    const bxc = ((b.left + b.right) / 2) - diagramRect.left;
+    const ayc = ((a.top + a.bottom) / 2) - diagramRect.top;
+    const byc = ((b.top + b.bottom) / 2) - diagramRect.top;
 
-    const xDiff = Math.abs(a.cx - b.cx);
+    const xDiff = Math.abs(axc - bxc);
 
-    // 같은 레인(가로 연결은 별도 처리) / 레인 다르면 cross-lane로
-    if (fromLane !== toLane) {
-      svg.appendChild(svgCrossLane(from, to, cls));
-      return;
-    }
+    /* ✅ contract 억제 로직 제거 (표시되게) */
 
-    // 같은 레인에서 같은 컬럼 정도(세로 느낌)면 직선 세로
     if (xDiff < 48) {
-      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
-      const x = (a.cx + b.cx)/2;
-      const y1 = (b.cy >= a.cy) ? (a.bottom + 6) : (a.top - 6);
-      const y2 = (b.cy >= a.cy) ? (b.top - 6) : (b.bottom + 6);
-      const d = `M ${x} ${y1} L ${x} ${y2}`;
-      p.setAttribute('d', d);
-      p.setAttribute('class', cls);
+      const x = (axc + bxc) / 2;
 
-      if ((cls || '').includes('dashed')) p.setAttribute('marker-end','url(#arrowheadBlue)');
-      else if ((cls || '').includes('faint')) p.setAttribute('marker-end','url(#arrowheadFaint)');
-      else p.setAttribute('marker-end','url(#arrowhead)');
+      let y1, y2;
+      if (byc >= ayc) {
+        y1 = (a.bottom - diagramRect.top) + 4;
+        y2 = (b.top - diagramRect.top) - 6;
+      } else {
+        y1 = (a.top - diagramRect.top) - 6;
+        y2 = (b.bottom - diagramRect.top) + 4;
+      }
 
-      svg.appendChild(p);
+      const path = svgLineV(x, y1, y2, cls);
+      if ((cls || '').includes('dashed')) path.setAttribute('marker-end','url(#arrowheadBlue)');
+      else if ((cls || '').includes('faint')) path.setAttribute('marker-end','url(#arrowheadFaint)');
+      svg.appendChild(path);
       return;
     }
 
-    // 같은 레인인데 멀리 떨어진 특수 연결은 "아래로" 라우팅
-    svg.appendChild(svgLaneFlow(from, to, cls));
+    const x1 = (a.right - diagramRect.left) + 4;
+    const y1 = (a.top + a.height/2 - diagramRect.top);
+    const x2 = (b.left - diagramRect.left) - 6;
+    const y2 = (b.top + b.height/2 - diagramRect.top);
+
+    const path = svgLine(x1, y1, x2, y2, cls);
+    if ((cls || '').includes('dashed')) path.setAttribute('marker-end','url(#arrowheadBlue)');
+    else if ((cls || '').includes('faint')) path.setAttribute('marker-end','url(#arrowheadFaint)');
+    svg.appendChild(path);
   }
 
   function draw() {
@@ -835,14 +762,13 @@
       { name:'contract', cls:'arrow' }
     ];
 
+    /* ✅ 레인 내 순차 화살표를 "노드 아래"로 */
     lanes.forEach(l => {
       const list = getLaneNodes(l.name);
       for (let i=0;i<list.length-1;i++) {
-        // ✅ 같은 레인 순차 연결: 노드 아래로 지나가게
         const path = svgLaneFlow(list[i].el, list[i+1].el, l.cls);
         svg.appendChild(path);
 
-        // ✅ 스텝 점프 가이드(연한 선)도 아래로 더 내려서 표시
         if (list[i+1].step - list[i].step > 1) {
           const guide = svgLaneFlow(list[i].el, list[i+1].el, 'arrow faint');
           guide.setAttribute('marker-end','url(#arrowheadFaint)');
@@ -851,7 +777,7 @@
       }
     });
 
-    // cross-lane connections (핵심 의존/트리거) — ✅ contract 억제 로직 제거됨
+    // cross-lane connections (핵심 의존/트리거)
     drawEdge('system-1','customer-1','arrow dashed');
     drawEdge('system-1','ops-1','arrow dashed');
     drawEdge('customer-2','ops-2','arrow faint');
@@ -868,36 +794,28 @@
     drawEdge('system-6','customer-6','arrow dashed');
     drawEdge('system-6','ops-6','arrow dashed');
     drawEdge('customer-6','system-6','arrow dashed');
-
     drawEdge('ops-7','customer-7','arrow');
-    drawEdge('ops-7','contract-3','arrow');       // ✅ 표시됨
-    drawEdge('ops-8','contract-4','arrow');       // ✅ 표시됨
+    drawEdge('ops-7','contract-3','arrow');
+    drawEdge('ops-8','contract-4','arrow');
     drawEdge('ops-8','customer-7','arrow faint');
-
     drawEdge('ops-9','system-9','arrow dashed');
     drawEdge('ops-10','system-9','arrow dashed');
     drawEdge('system-9','customer-9','arrow dashed');
-
-    drawEdge('ops-10','customer-8','arrow');      // ✅ customer-8 변경된 노드로 정확히 연결
-
+    drawEdge('ops-10','customer-8','arrow');
     drawEdge('system-10','customer-10','arrow dashed');
     drawEdge('system-11','customer-11','arrow dashed');
-
     drawEdge('ops-12','customer-12','arrow');
-    drawEdge('ops-12','contract-5','arrow');      // ✅ 표시됨
-
+    drawEdge('ops-12','contract-5','arrow');
     drawEdge('ops-13','customer-13','arrow');
-    drawEdge('ops-13','contract-6','arrow');      // ✅ 표시됨
+    drawEdge('ops-13','contract-6','arrow');
     drawEdge('ops-13','contract-7','arrow faint');
     drawEdge('customer-13','contract-7','arrow faint');
-
     drawEdge('system-14','customer-14','arrow dashed');
     drawEdge('system-14','ops-14','arrow dashed');
-    drawEdge('system-14','contract-9','arrow dashed');   // ✅ 표시됨
-    drawEdge('system-14','contract-10','arrow dashed');  // ✅ 표시됨
-
+    drawEdge('system-14','contract-9','arrow dashed');
+    drawEdge('system-14','contract-10','arrow dashed');
     drawEdge('customer-15','ops-15','arrow');
-    drawEdge('ops-15','contract-11','arrow');     // ✅ 표시됨
+    drawEdge('ops-15','contract-11','arrow');
     drawEdge('customer-15','contract-11','arrow faint');
   }
 
@@ -910,7 +828,7 @@
     const padX = parseFloat(st.getPropertyValue('--padX')) || 24;
     const laneH = parseFloat(st.getPropertyValue('--laneH')) || 190;
     const laneCount = diagram.querySelectorAll('.lane').length;
-    const w = labelW + (padX*2) + (colW*cols) + (gap*(cols-1)) + 24; // +24 buffer(우측 클리핑 방지)
+    const w = labelW + (padX*2) + (colW*cols) + (gap*(cols-1)) + 24;
     const h = laneH * laneCount;
     diagram.style.width = `${Math.ceil(w)}px`;
     diagram.style.height = `${Math.ceil(h)}px`;
@@ -942,7 +860,6 @@
     backdrop.style.display = 'none';
   }
 
-  // interactions
   diagram.addEventListener('click', (e) => {
     const node = e.target.closest('.node');
     if (!node) return;
