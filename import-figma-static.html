@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>PRO 마케팅 프로세스 · Full Swimlane</title>
+<style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --border:#e5e7eb;
+
+      /* 다이어그램 레이아웃(간격/가로 길이) */
+      --labelW:190px;
+      --colW:240px;
+      --gap:96px;
+      --laneH:190px;
+
+      --padX:24px;
+      /* JS에서 실제 픽셀 width/height를 계산해 override */
+      --diagramW:5200px;
+      --diagramH:760px;
+
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    html, body{width:100%; overflow-x:hidden;}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Apple SD Gothic Neo",
+                   "Noto Sans KR", "Segoe UI", Roboto, Helvetica, Arial, "Segoe UI Emoji";
+      color:var(--text);
+    }
+
+    .wrap{
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 28px 24px 40px;
+    }
+
+    .header{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+    .title{margin:0;font-size:22px;letter-spacing:-0.2px;}
+    .subtitle{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.5;max-width:900px;}
+
+    .legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+    .legend span{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
+      background:rgba(255,255,255,.65);border:1px solid rgba(148,163,184,.35);font-size:12px;color:#334155;
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:#111827;}
+    .dot.system{background:#0ea5e9;}
+
+    .topSteps{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;max-width:1200px}
+    .chip{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:#f3f4f6;border:1px solid #e5e7eb;font-size:12px;line-height:1}
+
+    .rawtext{margin-top:10px;max-width:1200px}
+    .rawtext summary{cursor:pointer;color:#374151;font-weight:700}
+    .rawtext pre{white-space:pre-wrap;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin:10px 0 0;color:#111827;font-size:12px;line-height:1.55}
+
+    /* 스크롤 컨테이너(가로 길게) */
+    .diagramShell{
+      margin-top:14px;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      overflow:auto;
+      box-shadow: 0 1px 2px rgba(15,23,42,.08);
+    }
+
+    .diagram{
+      position:relative;
+      width: var(--diagramW);
+      height: var(--diagramH);
+      background: var(--card);
+    }
+
+    .lane{
+      display:grid;
+      grid-template-columns: var(--labelW) 1fr;
+      height: var(--laneH);
+    }
+    .lane:not(:last-child){ border-bottom: 1px solid #eef2f7; }
+
+    .lane__label{
+      padding:16px 14px;
+      font-weight:900;
+      font-size:13px;
+      border-right: 1px solid var(--border);
+      background: rgba(255,255,255,.55);
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:6px;
+    }
+    .lane__label small{
+      display:block;
+      font-weight:700;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
+    }
+
+    .lane__body{
+      padding: 0 var(--padX);
+      display:grid;
+      grid-template-columns: repeat(15, var(--colW));
+      column-gap: var(--gap);
+      align-items:center;
+    }
+
+    .node{
+      min-height:72px;
+      padding:10px 12px;
+      border:1px solid #d1d5db;
+      border-radius: 12px;
+      background:#fff;
+      box-shadow: 0 1px 2px rgba(15,23,42,.08);
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      gap:6px;
+      z-index:2;
+      position:relative;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .node:hover{ transform: translateY(-1px); box-shadow: 0 6px 18px rgba(15,23,42,.10); border-color:#cbd5e1; }
+
+    .node.system{
+      border-color: rgba(14,165,233,.55);
+      background: rgba(14,165,233,.06);
+    }
+
+    .node__title{
+      font-size:12px;
+      font-weight:950;
+      line-height:1.25;
+      letter-spacing:-0.15px;
+      word-break:keep-all;
+    }
+
+    /* 미리보기는 3줄까지만(노드 높이 안정), 클릭하면 모달에서 원문 전체 */
+    .node__meta{
+      font-size:11px;
+      color: var(--muted);
+      line-height:1.25;
+      word-break:keep-all;
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+
+    /* SVG (화살표) */
+    #lines{
+      position:absolute;
+      left:0; top:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      z-index:1;
+    }
+    .arrow{ stroke:#111827; stroke-width:2; fill:none; }
+    .arrow.dashed{ stroke-dasharray: 6 5; stroke:#0ea5e9; }
+    .arrow.faint{ stroke:#94a3b8; stroke-width:1.5; }
+
+    /* Modal */
+    .modalBackdrop{
+      position:fixed; inset:0;
+      background: rgba(15,23,42,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:100;
+    }
+    .modal{
+      width:min(860px, 96vw);
+      background:#fff;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,.35);
+      box-shadow: 0 16px 60px rgba(15,23,42,.35);
+      overflow:hidden;
+    }
+    .modalHeader{
+      padding:14px 16px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:1px solid #eef2f7;
+    }
+    .modalHeader h2{margin:0;font-size:15px;letter-spacing:-0.2px;}
+    .modalHeader p{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.5;}
+    .closeBtn{
+      border:1px solid #e5e7eb;
+      background:#fff;
+      border-radius:10px;
+      padding:8px 12px;
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+      transition: background .12s ease;
+    }
+    .closeBtn:hover{background:#f8fafc}
+
+    .modalBody{padding: 14px 16px;}
+    .detailGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .detailCard{
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      padding:12px 12px;
+      background:#fff;
+    }
+    .detailCard h3{margin:0 0 6px;font-size:12px;letter-spacing:-0.15px;}
+    .detailCard pre{margin:0;white-space:pre-wrap;font-family:inherit;font-size:12px;line-height:1.55;color:#0f172a;}
+    .hint{margin-top:10px;color:var(--muted);font-size:11px;}
+
+    @media (max-width: 720px){
+      :root{ --labelW:160px; --colW:220px; --gap:72px; --laneH:210px; }
+    }
+  
+
+/* === Figma import page (static arrows, no scroll) === */
+html, body { height:100%; }
+body { overflow:hidden; }
+.wrap { width:100%; max-width:none; margin:0; }
+.diagramShell { overflow:hidden; }
+/* zoom scales layout (helps URL import tools capture whole) */
+.diagram { zoom: 0.35; }
+/* fixed node height to keep arrows aligned */
+.node { height:84px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+<div>
+<h1 class="title">PRO 마케팅 프로세스 · 신청 → 운영/정산 → 해지</h1>
+<p class="subtitle">고객(몰어드민) / 운영자(마케팅센터) / 시스템 자동 / 후불계약 관점 4개 레인을 가로 15칸 그리드에 배치했습니다. 노드는 3줄 프리뷰로 높이를 맞추고, 클릭하면 각 항목의 원문 전체가 상세로 표시됩니다.</p>
+</div>
+<div aria-label="범례" class="legend">
+<span><span class="dot"></span>사용자/운영자 노드</span>
+<span><span class="dot system"></span>시스템 자동 노드</span>
+</div>
+</div>
+<div aria-label="가로 스크롤 영역" class="diagramShell">
+<div aria-label="PRO 마케팅 프로세스 스윔레인 다이어그램" class="diagram" id="diagram" role="img">
+<svg aria-hidden="true" height="760" id="lines" preserveAspectRatio="xMinYMin meet" viewBox="0 0 5206 760" width="5206">
+<defs>
+<marker id="arrowhead" markerheight="8" markerwidth="10" orient="auto" refx="9" refy="4">
+<polygon fill="#111827" points="0,0 10,4 0,8"></polygon>
+</marker>
+<marker id="arrowheadBlue" markerheight="8" markerwidth="10" orient="auto" refx="9" refy="4">
+<polygon fill="#0ea5e9" points="0,0 10,4 0,8"></polygon>
+</marker>
+<marker id="arrowheadFaint" markerheight="8" markerwidth="10" orient="auto" refx="9" refy="4">
+<polygon fill="#94a3b8" points="0,0 10,4 0,8"></polygon>
+</marker>
+</defs>
+<path class="arrow" d="M 458.0 95.0 C 488.1 95.0, 513.9 95.0, 544.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 794.0 95.0 C 824.1 95.0, 849.9 95.0, 880.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1130.0 95.0 C 1160.1 95.0, 1185.9 95.0, 1216.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1466.0 95.0 C 1496.1 95.0, 1521.9 95.0, 1552.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1802.0 95.0 C 1832.1 95.0, 1857.9 95.0, 1888.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2138.0 95.0 C 2168.1 95.0, 2193.9 95.0, 2224.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2474.0 95.0 C 2504.1 95.0, 2529.9 95.0, 2560.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2810.0 95.0 C 2840.1 95.0, 2865.9 95.0, 2896.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3146.0 95.0 C 3176.1 95.0, 3201.9 95.0, 3232.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3482.0 95.0 C 3512.1 95.0, 3537.9 95.0, 3568.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3818.0 95.0 C 3848.1 95.0, 3873.9 95.0, 3904.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 4154.0 95.0 C 4184.1 95.0, 4209.9 95.0, 4240.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 4490.0 95.0 C 4520.1 95.0, 4545.9 95.0, 4576.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 4826.0 95.0 C 4856.1 95.0, 4881.9 95.0, 4912.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 458.0 285.0 C 488.1 285.0, 513.9 285.0, 544.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 794.0 285.0 C 824.1 285.0, 849.9 285.0, 880.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1130.0 285.0 C 1160.1 285.0, 1185.9 285.0, 1216.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1466.0 285.0 C 1496.1 285.0, 1521.9 285.0, 1552.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1802.0 285.0 C 1832.1 285.0, 1857.9 285.0, 1888.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2138.0 285.0 C 2168.1 285.0, 2193.9 285.0, 2224.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2474.0 285.0 C 2504.1 285.0, 2529.9 285.0, 2560.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2810.0 285.0 C 2840.1 285.0, 2865.9 285.0, 2896.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3146.0 285.0 C 3176.1 285.0, 3201.9 285.0, 3232.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3482.0 285.0 C 3512.1 285.0, 3537.9 285.0, 3568.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3818.0 285.0 C 3848.1 285.0, 3873.9 285.0, 3904.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 4154.0 285.0 C 4184.1 285.0, 4209.9 285.0, 4240.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 4490.0 285.0 C 4520.1 285.0, 4545.9 285.0, 4576.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 4826.0 285.0 C 4856.1 285.0, 4881.9 285.0, 4912.0 285.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow dashed" d="M 458.0 475.0 C 605.7 475.0, 732.3 475.0, 880.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow faint" d="M 458.0 525.0 C 605.7 525.0, 732.3 525.0, 880.0 525.0" marker-end="url(#arrowheadFaint)"></path>
+<path class="arrow dashed" d="M 1130.0 475.0 C 1160.1 475.0, 1185.9 475.0, 1216.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 1466.0 475.0 C 1496.1 475.0, 1521.9 475.0, 1552.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 1802.0 475.0 C 1832.1 475.0, 1857.9 475.0, 1888.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 2138.0 475.0 C 2298.0 475.0, 2736.0 475.0, 2896.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow faint" d="M 2138.0 525.0 C 2298.0 525.0, 2736.0 525.0, 2896.0 525.0" marker-end="url(#arrowheadFaint)"></path>
+<path class="arrow dashed" d="M 3146.0 475.0 C 3176.1 475.0, 3201.9 475.0, 3232.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 3482.0 475.0 C 3512.1 475.0, 3537.9 475.0, 3568.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 3818.0 475.0 C 3978.0 475.0, 4416.0 475.0, 4576.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow faint" d="M 3818.0 525.0 C 3978.0 525.0, 4416.0 525.0, 4576.0 525.0" marker-end="url(#arrowheadFaint)"></path>
+<path class="arrow" d="M 458.0 665.0 C 488.1 665.0, 513.9 665.0, 544.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 794.0 665.0 C 824.1 665.0, 849.9 665.0, 880.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1130.0 665.0 C 1160.1 665.0, 1185.9 665.0, 1216.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1466.0 665.0 C 1496.1 665.0, 1521.9 665.0, 1552.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 1802.0 665.0 C 1832.1 665.0, 1857.9 665.0, 1888.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2138.0 665.0 C 2168.1 665.0, 2193.9 665.0, 2224.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2474.0 665.0 C 2504.1 665.0, 2529.9 665.0, 2560.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 2810.0 665.0 C 2840.1 665.0, 2865.9 665.0, 2896.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3146.0 665.0 C 3176.1 665.0, 3201.9 665.0, 3232.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 3482.0 665.0 C 3512.1 665.0, 3537.9 665.0, 3568.0 665.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow dashed" d="M 334.0 427.0 C 334.0 326.9, 334.0 241.1, 334.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 334.0 427.0 C 334.0 393.4, 334.0 364.6, 334.0 331.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow faint" d="M 670.0 141.0 C 670.0 174.6, 670.0 203.4, 670.0 237.0" marker-end="url(#arrowheadFaint)"></path>
+<path class="arrow dashed" d="M 794.0 95.0 C 824.1 95.0, 849.9 475.0, 880.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 794.0 285.0 C 824.1 285.0, 849.9 475.0, 880.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 1006.0 427.0 C 1006.0 326.9, 1006.0 241.1, 1006.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 1130.0 285.0 C 1160.1 285.0, 1185.9 475.0, 1216.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 1342.0 427.0 C 1342.0 326.9, 1342.0 241.1, 1342.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 1678.0 427.0 C 1678.0 326.9, 1678.0 241.1, 1678.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 1802.0 475.0 C 1642.0 475.0, 1376.0 285.0, 1216.0 285.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow faint" d="M 1802.0 95.0 C 1642.0 95.0, 1376.0 285.0, 1216.0 285.0" marker-end="url(#arrowheadFaint)"></path>
+<path class="arrow dashed" d="M 1678.0 141.0 C 1678.0 241.1, 1678.0 326.9, 1678.0 427.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 2014.0 331.0 C 2014.0 364.6, 2014.0 393.4, 2014.0 427.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 2014.0 427.0 C 2014.0 326.9, 2014.0 241.1, 2014.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 2014.0 427.0 C 2014.0 393.4, 2014.0 364.6, 2014.0 331.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 2014.0 141.0 C 2014.0 241.1, 2014.0 326.9, 2014.0 427.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow" d="M 2350.0 237.0 C 2350.0 203.4, 2350.0 174.6, 2350.0 141.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow faint" d="M 2810.0 285.0 C 2650.0 285.0, 2384.0 95.0, 2224.0 95.0" marker-end="url(#arrowheadFaint)"></path>
+<path class="arrow dashed" d="M 3022.0 331.0 C 3022.0 364.6, 3022.0 393.4, 3022.0 427.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 3482.0 285.0 C 3322.0 285.0, 3056.0 475.0, 2896.0 475.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 3022.0 427.0 C 3022.0 326.9, 3022.0 241.1, 3022.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow" d="M 3482.0 285.0 C 3322.0 285.0, 2720.0 95.0, 2560.0 95.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow dashed" d="M 3358.0 427.0 C 3358.0 326.9, 3358.0 241.1, 3358.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 3694.0 427.0 C 3694.0 326.9, 3694.0 241.1, 3694.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow" d="M 4030.0 237.0 C 4030.0 203.4, 4030.0 174.6, 4030.0 141.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow" d="M 4366.0 237.0 C 4366.0 203.4, 4366.0 174.6, 4366.0 141.0" marker-end="url(#arrowhead)"></path>
+<path class="arrow dashed" d="M 4702.0 427.0 C 4702.0 326.9, 4702.0 241.1, 4702.0 141.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow dashed" d="M 4702.0 427.0 C 4702.0 393.4, 4702.0 364.6, 4702.0 331.0" marker-end="url(#arrowheadBlue)"></path>
+<path class="arrow" d="M 5038.0 141.0 C 5038.0 174.6, 5038.0 203.4, 5038.0 237.0" marker-end="url(#arrowhead)"></path></svg>
+<section class="lane lane--customer" data-lane="customer">
+<div class="lane__label">고객 동선
+            <small>광고주(몰어드민 사용자)가 신청부터 라이브/운영/정산/해지까지 경험하는 흐름</small>
+</div>
+<div class="lane__body">
+<div class="node" data-key="customer-1" data-step="1" style="grid-column:1">
+<div class="node__title">1. 안내 수신 후 신청 진입</div>
+<div class="node__meta">(알림톡) PRO 마케팅 소개 &amp; 가입 안내 수신</div>
+</div>
+<div class="node" data-key="customer-2" data-step="2" style="grid-column:2">
+<div class="node__title">2. 신청/약관 동의</div>
+<div class="node__meta">(몰어드민) PRO 마케팅 신청 &amp; 약관 동의</div>
+</div>
+<div class="node" data-key="customer-3" data-step="3" style="grid-column:3">
+<div class="node__title">3. 신청 완료 확인</div>
+<div class="node__meta">(알림톡) 신청완료 안내 수신</div>
+</div>
+<div class="node" data-key="customer-4" data-step="4" style="grid-column:4">
+<div class="node__title">4. 업종 심사 결과 확인</div>
+<div class="node__meta">(알림톡) 진행 불가 안내 수신(해당 시)</div>
+</div>
+<div class="node" data-key="customer-5" data-step="5" style="grid-column:5">
+<div class="node__title">5. 카드 등록 진행(필요 시)</div>
+<div class="node__meta">(몰어드민) 광고 정보 확인 &amp; 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신</div>
+</div>
+<div class="node" data-key="customer-6" data-step="6" style="grid-column:6">
+<div class="node__title">6. 광고 자산 연동 요청/점검</div>
+<div class="node__meta">(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신</div>
+</div>
+<div class="node" data-key="customer-7" data-step="7" style="grid-column:7">
+<div class="node__title">7. 후불 한도/세팅 안내 확인</div>
+<div class="node__meta">(알림톡) 후불 한도 확정 &amp; 광고 세팅 안내 수신</div>
+</div>
+<div class="node" data-key="customer-8" data-step="8" style="grid-column:8">
+<div class="node__title">8. 라이브 상태 확인</div>
+<div class="node__meta">(몰어드민) 광고 진행중 안내 &amp; 해지 버튼 노출</div>
+</div>
+<div class="node" data-key="customer-9" data-step="9" style="grid-column:9">
+<div class="node__title">9. 광고 시작/세팅 내역 수신</div>
+<div class="node__meta">(알림톡/이메일) 광고 시작 안내 &amp; 세팅 내역 수신</div>
+</div>
+<div class="node" data-key="customer-10" data-step="10" style="grid-column:10">
+<div class="node__title">10. 운영 루틴 결과 수신</div>
+<div class="node__meta">(알림톡/이메일) 광고 세팅 &amp; 필터링 내역 수신</div>
+</div>
+<div class="node" data-key="customer-11" data-step="11" style="grid-column:11">
+<div class="node__title">11. 주간 보고서 수신</div>
+<div class="node__meta">(알림톡/이메일) 광고보고서 수신</div>
+</div>
+<div class="node" data-key="customer-12" data-step="12" style="grid-column:12">
+<div class="node__title">12. 월간 예산 반영 알림 수신</div>
+<div class="node__meta">(알림톡) 후불 예산 반영 알림 수신</div>
+</div>
+<div class="node" data-key="customer-13" data-step="13" style="grid-column:13">
+<div class="node__title">13. 한도 재산정(증/감액) 대응</div>
+<div class="node__meta">증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&amp;일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신</div>
+</div>
+<div class="node" data-key="customer-14" data-step="14" style="grid-column:14">
+<div class="node__title">14. 후불 정산/미수금 확인</div>
+<div class="node__meta">(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&amp;중단/채권추심 안내 수신</div>
+</div>
+<div class="node" data-key="customer-15" data-step="15" style="grid-column:15">
+<div class="node__title">15. 해지 요청/완료</div>
+<div class="node__meta">(몰어드민) 1:1 문의/CTI 접수 → 해지&amp;정산 안내/완료 확인, (알림톡) 정산완료&amp;해지완료 수신</div>
+</div>
+</div>
+</section>
+<section class="lane lane--ops" data-lane="ops">
+<div class="lane__label">내부 사용자 동선
+            <small>운영자/마케팅센터가 신청 접수부터 세팅/운영/정산/해지까지 처리하는 흐름</small>
+</div>
+<div class="lane__body">
+<div class="node" data-key="ops-1" data-step="1" style="grid-column:1">
+<div class="node__title">1. 대상자 선별/안내 발송</div>
+<div class="node__meta">(운영/시스템) 알림 발송 운영</div>
+</div>
+<div class="node" data-key="ops-2" data-step="2" style="grid-column:2">
+<div class="node__title">2. 신청 접수 관리</div>
+<div class="node__meta">(FAS) PRO 마케팅 신청 접수</div>
+</div>
+<div class="node" data-key="ops-3" data-step="3" style="grid-column:3">
+<div class="node__title">3. 업종 심사</div>
+<div class="node__meta">(심사 프로세스)</div>
+</div>
+<div class="node" data-key="ops-4" data-step="4" style="grid-column:4">
+<div class="node__title">4. 카드 등록 상태 관리</div>
+<div class="node__meta">(상태 확인)</div>
+</div>
+<div class="node" data-key="ops-5" data-step="5" style="grid-column:5">
+<div class="node__title">5. 담당자 지정</div>
+<div class="node__meta">(운영자) 담당자 지정</div>
+</div>
+<div class="node" data-key="ops-6" data-step="6" style="grid-column:6">
+<div class="node__title">6. 광고 자산 연동(미연동 시)</div>
+<div class="node__meta">(운영자) CMC 매체별 광고 신청</div>
+</div>
+<div class="node" data-key="ops-7" data-step="7" style="grid-column:7">
+<div class="node__title">7. 후불 한도 확정</div>
+<div class="node__meta">(운영자) 후불 한도 확정</div>
+</div>
+<div class="node" data-key="ops-8" data-step="8" style="grid-column:8">
+<div class="node__title">8. 후불 예산 반영</div>
+<div class="node__meta">(운영자) 후불 예산 반영</div>
+</div>
+<div class="node" data-key="ops-9" data-step="9" style="grid-column:9">
+<div class="node__title">9. 차마솔 계정/시나리오 설정</div>
+<div class="node__meta">(운영자) 차마솔 계정 등록 &amp; 시나리오 설정</div>
+</div>
+<div class="node" data-key="ops-10" data-step="10" style="grid-column:10">
+<div class="node__title">10. 세팅 검수 &amp; 광고 ON</div>
+<div class="node__meta">(운영자) 세팅 결과 검수 &amp; ON</div>
+</div>
+<div class="node" data-key="ops-11" data-step="11" style="grid-column:11">
+<div class="node__title">11. 보고서 세팅</div>
+<div class="node__meta">(운영자) CMC 광고보고서 세팅</div>
+</div>
+<div class="node" data-key="ops-12" data-step="12" style="grid-column:12">
+<div class="node__title">12. 월간 예산 루틴 반영</div>
+<div class="node__meta">(운영자) 월간 예산 반영 대상 확인/반영</div>
+</div>
+<div class="node" data-key="ops-13" data-step="13" style="grid-column:13">
+<div class="node__title">13. 한도 재산정/증액 처리</div>
+<div class="node__meta">(운영자) 재산정 결과 반영, 증액 적용</div>
+</div>
+<div class="node" data-key="ops-14" data-step="14" style="grid-column:14">
+<div class="node__title">14. 정산/미수금/추심</div>
+<div class="node__meta">(운영자) 미수금 대상 확인, 광고 중단 처리, 추심 절차 진행</div>
+</div>
+<div class="node" data-key="ops-15" data-step="15" style="grid-column:15">
+<div class="node__title">15. 해지 처리</div>
+<div class="node__meta">(운영자) 해지 요청 확인/해지 처리</div>
+</div>
+</div>
+</section>
+<section class="lane lane--system" data-lane="system">
+<div class="lane__label">시스템 동선
+            <small>사람 작업과 별개로 시스템이 자동으로 수행/발송/판단하는 흐름(자동 노드)</small>
+</div>
+<div class="lane__body">
+<div class="node system" data-key="system-1" data-step="1" style="grid-column:1">
+<div class="node__title">대상자 선별 &amp; 알림톡 발송</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-3" data-step="3" style="grid-column:3">
+<div class="node__title">신청 접수 상태 관리(FAS 연계)</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-4" data-step="4" style="grid-column:4">
+<div class="node__title">업종 심사 결과 반영 및 진행불가 알림 발송</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-5" data-step="5" style="grid-column:5">
+<div class="node__title">카드 등록 상태 체크 &amp; 리마인드 발송</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-6" data-step="6" style="grid-column:6">
+<div class="node__title">광고자산 연동 상태 체크 &amp; 요청/점검 알림</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-9" data-step="9" style="grid-column:9">
+<div class="node__title">차마솔 광고 세팅 자동 수행</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-10" data-step="10" style="grid-column:10">
+<div class="node__title">차마솔 시나리오 정기 실행(운영 루틴)</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-11" data-step="11" style="grid-column:11">
+<div class="node__title">CMC 광고보고서 주간 생성(리포트 루틴)</div>
+<div class="node__meta">AUTO</div>
+</div>
+<div class="node system" data-key="system-14" data-step="14" style="grid-column:14">
+<div class="node__title">후불 정산 금액 산정(월 2회) &amp; PG차감/미수금 분기 + 카드결제 성공/실패 처리</div>
+<div class="node__meta">AUTO</div>
+</div>
+</div>
+</section>
+<section class="lane lane--contract" data-lane="contract">
+<div class="lane__label">후불계약 동선
+            <small>후불 과금/한도/예산/정산/미수금/부속합의 중심 흐름</small>
+</div>
+<div class="lane__body">
+<div class="node" data-key="contract-1" data-step="1" style="grid-column:1">
+<div class="node__title">1. 가입/동의 기반 형성</div>
+<div class="node__meta">PRO 마케팅 신청 &amp; 약관 동의(신청 자격 충족 시)</div>
+</div>
+<div class="node" data-key="contract-2" data-step="2" style="grid-column:2">
+<div class="node__title">2. 결제수단 확보</div>
+<div class="node__meta">카드 등록(미등록 시 등록 요청) / 기등록 카드 확인</div>
+</div>
+<div class="node" data-key="contract-3" data-step="3" style="grid-column:3">
+<div class="node__title">3. 한도 확정</div>
+<div class="node__meta">“후불 한도 확정 &amp; 광고 세팅 안내” 수신</div>
+</div>
+<div class="node" data-key="contract-4" data-step="4" style="grid-column:4">
+<div class="node__title">4. 예산 반영</div>
+<div class="node__meta">(알림으로 반영 결과 확인)</div>
+</div>
+<div class="node" data-key="contract-5" data-step="5" style="grid-column:5">
+<div class="node__title">5. 월간 예산 반영(루틴)</div>
+<div class="node__meta">“후불 예산 반영 알림” 수신</div>
+</div>
+<div class="node" data-key="contract-6" data-step="6" style="grid-column:6">
+<div class="node__title">6. 한도 재산정(월 1회)</div>
+<div class="node__meta">감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인</div>
+</div>
+<div class="node" data-key="contract-7" data-step="7" style="grid-column:7">
+<div class="node__title">7. 증액 시 부속합의</div>
+<div class="node__meta">(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인</div>
+</div>
+<div class="node" data-key="contract-8" data-step="8" style="grid-column:8">
+<div class="node__title">8. 일예산 조정</div>
+<div class="node__meta">증액&amp;일예산 조정 안내 수신</div>
+</div>
+<div class="node" data-key="contract-9" data-step="9" style="grid-column:9">
+<div class="node__title">9. 정산(월 2회)</div>
+<div class="node__meta">정산 예정 안내 수신, PG차감/미수금 내역 확인</div>
+</div>
+<div class="node" data-key="contract-10" data-step="10" style="grid-column:10">
+<div class="node__title">10. 미수금 처리</div>
+<div class="node__meta">카드결제 안내 수신 또는 실패&amp;광고중단/추심 안내 수신</div>
+</div>
+<div class="node" data-key="contract-11" data-step="11" style="grid-column:11">
+<div class="node__title">11. 해지 시 정산 완료</div>
+<div class="node__meta">해지&amp;정산 완료 확인, 완료 알림 수신</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<!-- Modal -->
+
+
+</body>
+</html>
