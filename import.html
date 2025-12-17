@@ -18,6 +18,7 @@
       --laneH:190px;
 
       --padX:24px;
+
       --diagramW:5200px;
       --diagramH:760px;
 
@@ -49,14 +50,6 @@
       flex-wrap:wrap;
     }
     .title{margin:0;font-size:22px;letter-spacing:-0.2px;}
-    .subtitle{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.5;max-width:900px;}
-
-    .legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
-    .legend span{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
-      background:rgba(255,255,255,.65);border:1px solid rgba(148,163,184,.35);font-size:12px;color:#334155;
-    }
-    .dot{width:10px;height:10px;border-radius:999px;background:#111827;}
-    .dot.system{background:#0ea5e9;}
 
     .diagramShell{
       margin-top:14px;
@@ -119,7 +112,7 @@
       flex-direction:column;
       justify-content:flex-start;
       gap:6px;
-      z-index:2;            /* ✅ 노드가 항상 위 */
+      z-index:2;               /* ✅ 노드가 항상 위 */
       position:relative;
       cursor:pointer;
       transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
@@ -157,7 +150,7 @@
       width:100%;
       height:100%;
       pointer-events:none;
-      z-index:1;            /* ✅ 항상 노드 뒤 */
+      z-index:1;               /* ✅ 항상 노드 뒤 */
     }
     .arrow{ stroke:#111827; stroke-width:2; fill:none; }
     .arrow.dashed{ stroke-dasharray: 6 5; stroke:#0ea5e9; }
@@ -227,256 +220,97 @@
 <body>
   <div class="wrap">
     <div class="header">
-      <div>
-        <!-- ✅ 요청: 제목만 남김 -->
-        <h1 class="title">PRO 마케팅 프로세스</h1>
-      </div>
-      <div class="legend" aria-label="범례">
-        <span><span class="dot"></span>사용자/운영자 노드</span>
-        <span><span class="dot system"></span>시스템 자동 노드</span>
-      </div>
+      <!-- ✅ 제목만 -->
+      <h1 class="title">PRO 마케팅 프로세스</h1>
     </div>
 
     <div class="diagramShell" aria-label="가로 스크롤 영역">
       <div class="diagram" id="diagram" role="img" aria-label="PRO 마케팅 프로세스 스윔레인 다이어그램">
         <svg id="lines" aria-hidden="true"></svg>
 
-        <!-- 고객 -->
+        <!-- (이하 고객/내부/시스템 동선은 원문 그대로) -->
         <section class="lane lane--customer" data-lane="customer">
           <div class="lane__label">고객 동선
             <small>광고주(몰어드민 사용자)가 신청부터 라이브/운영/정산/해지까지 경험하는 흐름</small>
           </div>
           <div class="lane__body">
-            <div class="node" data-key="customer-1" data-step="1" style="grid-column:1">
-              <div class="node__title">1. 안내 수신 후 신청 진입</div>
-              <div class="node__meta">(알림톡) PRO 마케팅 소개 &amp; 가입 안내 수신</div>
-            </div>
-            <div class="node" data-key="customer-2" data-step="2" style="grid-column:2">
-              <div class="node__title">2. 신청/약관 동의</div>
-              <div class="node__meta">(몰어드민) PRO 마케팅 신청 &amp; 약관 동의</div>
-            </div>
-            <div class="node" data-key="customer-3" data-step="3" style="grid-column:3">
-              <div class="node__title">3. 신청 완료 확인</div>
-              <div class="node__meta">(알림톡) 신청완료 안내 수신</div>
-            </div>
-            <div class="node" data-key="customer-4" data-step="4" style="grid-column:4">
-              <div class="node__title">4. 업종 심사 결과 확인</div>
-              <div class="node__meta">(알림톡) 진행 불가 안내 수신(해당 시)</div>
-            </div>
-            <div class="node" data-key="customer-5" data-step="5" style="grid-column:5">
-              <div class="node__title">5. 카드 등록 진행(필요 시)</div>
-              <div class="node__meta">(몰어드민) 광고 정보 확인 &amp; 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신</div>
-            </div>
-            <div class="node" data-key="customer-6" data-step="6" style="grid-column:6">
-              <div class="node__title">6. 광고 자산 연동 요청/점검</div>
-              <div class="node__meta">(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신</div>
-            </div>
-            <div class="node" data-key="customer-7" data-step="7" style="grid-column:7">
-              <div class="node__title">7. 후불 한도/세팅 안내 확인</div>
-              <div class="node__meta">(알림톡) 후불 한도 확정 &amp; 광고 세팅 안내 수신</div>
-            </div>
-            <div class="node" data-key="customer-8" data-step="8" style="grid-column:8">
-              <div class="node__title">8. 라이브 상태 확인</div>
-              <div class="node__meta">(몰어드민) 광고 진행중 안내 &amp; 해지 버튼 노출</div>
-            </div>
-            <div class="node" data-key="customer-9" data-step="9" style="grid-column:9">
-              <div class="node__title">9. 광고 시작/세팅 내역 수신</div>
-              <div class="node__meta">(알림톡/이메일) 광고 시작 안내 &amp; 세팅 내역 수신</div>
-            </div>
-            <div class="node" data-key="customer-10" data-step="10" style="grid-column:10">
-              <div class="node__title">10. 운영 루틴 결과 수신</div>
-              <div class="node__meta">(알림톡/이메일) 광고 세팅 &amp; 필터링 내역 수신</div>
-            </div>
-            <div class="node" data-key="customer-11" data-step="11" style="grid-column:11">
-              <div class="node__title">11. 주간 보고서 수신</div>
-              <div class="node__meta">(알림톡/이메일) 광고보고서 수신</div>
-            </div>
-            <div class="node" data-key="customer-12" data-step="12" style="grid-column:12">
-              <div class="node__title">12. 월간 예산 반영 알림 수신</div>
-              <div class="node__meta">(알림톡) 후불 예산 반영 알림 수신</div>
-            </div>
-            <div class="node" data-key="customer-13" data-step="13" style="grid-column:13">
-              <div class="node__title">13. 한도 재산정(증/감액) 대응</div>
-              <div class="node__meta">증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&amp;일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신</div>
-            </div>
-            <div class="node" data-key="customer-14" data-step="14" style="grid-column:14">
-              <div class="node__title">14. 후불 정산/미수금 확인</div>
-              <div class="node__meta">(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&amp;중단/채권추심 안내 수신</div>
-            </div>
-            <div class="node" data-key="customer-15" data-step="15" style="grid-column:15">
-              <div class="node__title">15. 해지 요청/완료</div>
-              <div class="node__meta">(몰어드민) 1:1 문의/CTI 접수 → 해지&amp;정산 안내/완료 확인, (알림톡) 정산완료&amp;해지완료 수신</div>
-            </div>
+            <!-- customer 1~15 그대로 -->
+            <div class="node" data-key="customer-1" data-step="1" style="grid-column:1"><div class="node__title">1. 안내 수신 후 신청 진입</div><div class="node__meta">(알림톡) PRO 마케팅 소개 &amp; 가입 안내 수신</div></div>
+            <div class="node" data-key="customer-2" data-step="2" style="grid-column:2"><div class="node__title">2. 신청/약관 동의</div><div class="node__meta">(몰어드민) PRO 마케팅 신청 &amp; 약관 동의</div></div>
+            <div class="node" data-key="customer-3" data-step="3" style="grid-column:3"><div class="node__title">3. 신청 완료 확인</div><div class="node__meta">(알림톡) 신청완료 안내 수신</div></div>
+            <div class="node" data-key="customer-4" data-step="4" style="grid-column:4"><div class="node__title">4. 업종 심사 결과 확인</div><div class="node__meta">(알림톡) 진행 불가 안내 수신(해당 시)</div></div>
+            <div class="node" data-key="customer-5" data-step="5" style="grid-column:5"><div class="node__title">5. 카드 등록 진행(필요 시)</div><div class="node__meta">(몰어드민) 광고 정보 확인 &amp; 카드 등록 요청 / 기등록 안내, (알림톡) 카드등록 요청/기등록 카드 사용 안내 수신</div></div>
+            <div class="node" data-key="customer-6" data-step="6" style="grid-column:6"><div class="node__title">6. 광고 자산 연동 요청/점검</div><div class="node__meta">(몰어드민) 광고 준비중 안내, (알림톡) 자산 연동 요청 안내 수신 또는 점검중 안내 수신</div></div>
+            <div class="node" data-key="customer-7" data-step="7" style="grid-column:7"><div class="node__title">7. 후불 한도/세팅 안내 확인</div><div class="node__meta">(알림톡) 후불 한도 확정 &amp; 광고 세팅 안내 수신</div></div>
+            <div class="node" data-key="customer-8" data-step="8" style="grid-column:8"><div class="node__title">8. 광고계정 생성 확인8. ㄱ8</div><div class="node__meta">(몰어드민) 광고 진행중 안내 &amp; 해지 버튼 노출</div></div>
+            <div class="node" data-key="customer-9" data-step="9" style="grid-column:9"><div class="node__title">9. 광고 시작/세팅 내역 수신</div><div class="node__meta">(알림톡/이메일) 광고 시작 안내 &amp; 세팅 내역 수신</div></div>
+            <div class="node" data-key="customer-10" data-step="10" style="grid-column:10"><div class="node__title">10. 운영 루틴 결과 수신</div><div class="node__meta">(알림톡/이메일) 광고 세팅 &amp; 필터링 내역 수신</div></div>
+            <div class="node" data-key="customer-11" data-step="11" style="grid-column:11"><div class="node__title">11. 주간 보고서 수신</div><div class="node__meta">(알림톡/이메일) 광고보고서 수신</div></div>
+            <div class="node" data-key="customer-12" data-step="12" style="grid-column:12"><div class="node__title">12. 월간 예산 반영 알림 수신</div><div class="node__meta">(알림톡) 후불 예산 반영 알림 수신</div></div>
+            <div class="node" data-key="customer-13" data-step="13" style="grid-column:13"><div class="node__title">13. 한도 재산정(증/감액) 대응</div><div class="node__meta">증액 시: (몰어드민) 부속합의 요청/완료 내역 확인 + (알림톡) 증액&amp;일예산 조정 안내 수신 / 감액 시: (알림톡) 감액 적용 안내 수신</div></div>
+            <div class="node" data-key="customer-14" data-step="14" style="grid-column:14"><div class="node__title">14. 후불 정산/미수금 확인</div><div class="node__meta">(몰어드민) 정산 금액/PG차감/미수금/카드결제 내역 확인, (알림톡) 정산 예정/차감/미수금/실패&amp;중단/채권추심 안내 수신</div></div>
+            <div class="node" data-key="customer-15" data-step="15" style="grid-column:15"><div class="node__title">15. 해지 요청/완료</div><div class="node__meta">(몰어드민) 1:1 문의/CTI 접수 → 해지&amp;정산 안내/완료 확인, (알림톡) 정산완료&amp;해지완료 수신</div></div>
           </div>
         </section>
 
-        <!-- 내부 -->
         <section class="lane lane--ops" data-lane="ops">
           <div class="lane__label">내부 사용자 동선
             <small>운영자/마케팅센터가 신청 접수부터 세팅/운영/정산/해지까지 처리하는 흐름</small>
           </div>
           <div class="lane__body">
-            <div class="node" data-key="ops-1" data-step="1" style="grid-column:1">
-              <div class="node__title">1. 대상자 선별/안내 발송</div>
-              <div class="node__meta">(운영/시스템) 알림 발송 운영</div>
-            </div>
-            <div class="node" data-key="ops-2" data-step="2" style="grid-column:2">
-              <div class="node__title">2. 신청 접수 관리</div>
-              <div class="node__meta">(FAS) PRO 마케팅 신청 접수</div>
-            </div>
-            <div class="node" data-key="ops-3" data-step="3" style="grid-column:3">
-              <div class="node__title">3. 업종 심사</div>
-              <div class="node__meta">(심사 프로세스)</div>
-            </div>
-            <div class="node" data-key="ops-4" data-step="4" style="grid-column:4">
-              <div class="node__title">4. 카드 등록 상태 관리</div>
-              <div class="node__meta">(상태 확인)</div>
-            </div>
-            <div class="node" data-key="ops-5" data-step="5" style="grid-column:5">
-              <div class="node__title">5. 담당자 지정</div>
-              <div class="node__meta">(운영자) 담당자 지정</div>
-            </div>
-            <div class="node" data-key="ops-6" data-step="6" style="grid-column:6">
-              <div class="node__title">6. 광고 자산 연동(미연동 시)</div>
-              <div class="node__meta">(운영자) CMC 매체별 광고 신청</div>
-            </div>
-            <div class="node" data-key="ops-7" data-step="7" style="grid-column:7">
-              <div class="node__title">7. 후불 한도 확정</div>
-              <div class="node__meta">(운영자) 후불 한도 확정</div>
-            </div>
-            <div class="node" data-key="ops-8" data-step="8" style="grid-column:8">
-              <div class="node__title">8. 후불 예산 반영</div>
-              <div class="node__meta">(운영자) 후불 예산 반영</div>
-            </div>
-            <div class="node" data-key="ops-9" data-step="9" style="grid-column:9">
-              <div class="node__title">9. 차마솔 계정/시나리오 설정</div>
-              <div class="node__meta">(운영자) 차마솔 계정 등록 &amp; 시나리오 설정</div>
-            </div>
-            <div class="node" data-key="ops-10" data-step="10" style="grid-column:10">
-              <div class="node__title">10. 세팅 검수 &amp; 광고 ON</div>
-              <div class="node__meta">(운영자) 세팅 결과 검수 &amp; ON</div>
-            </div>
-            <div class="node" data-key="ops-11" data-step="11" style="grid-column:11">
-              <div class="node__title">11. 보고서 세팅</div>
-              <div class="node__meta">(운영자) CMC 광고보고서 세팅</div>
-            </div>
-            <div class="node" data-key="ops-12" data-step="12" style="grid-column:12">
-              <div class="node__title">12. 월간 예산 루틴 반영</div>
-              <div class="node__meta">(운영자) 월간 예산 반영 대상 확인/반영</div>
-            </div>
-            <div class="node" data-key="ops-13" data-step="13" style="grid-column:13">
-              <div class="node__title">13. 한도 재산정/증액 처리</div>
-              <div class="node__meta">(운영자) 재산정 결과 반영, 증액 적용</div>
-            </div>
-            <div class="node" data-key="ops-14" data-step="14" style="grid-column:14">
-              <div class="node__title">14. 정산/미수금/추심</div>
-              <div class="node__meta">(운영자) 미수금 대상 확인, 광고 중단 처리, 추심 절차 진행</div>
-            </div>
-            <div class="node" data-key="ops-15" data-step="15" style="grid-column:15">
-              <div class="node__title">15. 해지 처리</div>
-              <div class="node__meta">(운영자) 해지 요청 확인/해지 처리</div>
-            </div>
+            <!-- ops 1~15 그대로 -->
+            <div class="node" data-key="ops-1" data-step="1" style="grid-column:1"><div class="node__title">1. 대상자 선별/안내 발송</div><div class="node__meta">(운영/시스템) 알림 발송 운영</div></div>
+            <div class="node" data-key="ops-2" data-step="2" style="grid-column:2"><div class="node__title">2. 신청 접수 관리</div><div class="node__meta">(FAS) PRO 마케팅 신청 접수</div></div>
+            <div class="node" data-key="ops-3" data-step="3" style="grid-column:3"><div class="node__title">3. 업종 심사</div><div class="node__meta">(심사 프로세스)</div></div>
+            <div class="node" data-key="ops-4" data-step="4" style="grid-column:4"><div class="node__title">4. 카드 등록 상태 관리</div><div class="node__meta">(상태 확인)</div></div>
+            <div class="node" data-key="ops-5" data-step="5" style="grid-column:5"><div class="node__title">5. 담당자 지정</div><div class="node__meta">(운영자) 담당자 지정</div></div>
+            <div class="node" data-key="ops-6" data-step="6" style="grid-column:6"><div class="node__title">6. 광고 자산 연동(미연동 시)</div><div class="node__meta">(운영자) CMC 매체별 광고 신청</div></div>
+            <div class="node" data-key="ops-7" data-step="7" style="grid-column:7"><div class="node__title">7. 후불 한도 확정</div><div class="node__meta">(운영자) 후불 한도 확정</div></div>
+            <div class="node" data-key="ops-8" data-step="8" style="grid-column:8"><div class="node__title">8. 후불 예산 반영</div><div class="node__meta">(운영자) 후불 예산 반영</div></div>
+            <div class="node" data-key="ops-9" data-step="9" style="grid-column:9"><div class="node__title">9. 차마솔 계정/시나리오 설정</div><div class="node__meta">(운영자) 차마솔 계정 등록 &amp; 시나리오 설정</div></div>
+            <div class="node" data-key="ops-10" data-step="10" style="grid-column:10"><div class="node__title">10. 세팅 검수 &amp; 광고 ON</div><div class="node__meta">(운영자) 세팅 결과 검수 &amp; ON</div></div>
+            <div class="node" data-key="ops-11" data-step="11" style="grid-column:11"><div class="node__title">11. 보고서 세팅</div><div class="node__meta">(운영자) CMC 광고보고서 세팅</div></div>
+            <div class="node" data-key="ops-12" data-step="12" style="grid-column:12"><div class="node__title">12. 월간 예산 루틴 반영</div><div class="node__meta">(운영자) 월간 예산 반영 대상 확인/반영</div></div>
+            <div class="node" data-key="ops-13" data-step="13" style="grid-column:13"><div class="node__title">13. 한도 재산정/증액 처리</div><div class="node__meta">(운영자) 재산정 결과 반영, 증액 적용</div></div>
+            <div class="node" data-key="ops-14" data-step="14" style="grid-column:14"><div class="node__title">14. 정산/미수금/추심</div><div class="node__meta">(운영자) 미수금 대상 확인, 광고 중단 처리, 추심 절차 진행</div></div>
+            <div class="node" data-key="ops-15" data-step="15" style="grid-column:15"><div class="node__title">15. 해지 처리</div><div class="node__meta">(운영자) 해지 요청 확인/해지 처리</div></div>
           </div>
         </section>
 
-        <!-- 시스템 -->
         <section class="lane lane--system" data-lane="system">
           <div class="lane__label">시스템 동선
             <small>사람 작업과 별개로 시스템이 자동으로 수행/발송/판단하는 흐름(자동 노드)</small>
           </div>
           <div class="lane__body">
-            <div class="node system" data-key="system-1" data-step="1" style="grid-column:1">
-              <div class="node__title">대상자 선별 &amp; 알림톡 발송</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-3" data-step="3" style="grid-column:3">
-              <div class="node__title">신청 접수 상태 관리(FAS 연계)</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-4" data-step="4" style="grid-column:4">
-              <div class="node__title">업종 심사 결과 반영 및 진행불가 알림 발송</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-5" data-step="5" style="grid-column:5">
-              <div class="node__title">카드 등록 상태 체크 &amp; 리마인드 발송</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-6" data-step="6" style="grid-column:6">
-              <div class="node__title">광고자산 연동 상태 체크 &amp; 요청/점검 알림</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-9" data-step="9" style="grid-column:9">
-              <div class="node__title">차마솔 광고 세팅 자동 수행</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-10" data-step="10" style="grid-column:10">
-              <div class="node__title">차마솔 시나리오 정기 실행(운영 루틴)</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-11" data-step="11" style="grid-column:11">
-              <div class="node__title">CMC 광고보고서 주간 생성(리포트 루틴)</div>
-              <div class="node__meta">AUTO</div>
-            </div>
-            <div class="node system" data-key="system-14" data-step="14" style="grid-column:14">
-              <div class="node__title">후불 정산 금액 산정(월 2회) &amp; PG차감/미수금 분기 + 카드결제 성공/실패 처리</div>
-              <div class="node__meta">AUTO</div>
-            </div>
+            <div class="node system" data-key="system-1" data-step="1" style="grid-column:1"><div class="node__title">대상자 선별 &amp; 알림톡 발송</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-3" data-step="3" style="grid-column:3"><div class="node__title">신청 접수 상태 관리(FAS 연계)</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-4" data-step="4" style="grid-column:4"><div class="node__title">업종 심사 결과 반영 및 진행불가 알림 발송</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-5" data-step="5" style="grid-column:5"><div class="node__title">카드 등록 상태 체크 &amp; 리마인드 발송</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-6" data-step="6" style="grid-column:6"><div class="node__title">광고자산 연동 상태 체크 &amp; 요청/점검 알림</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-9" data-step="9" style="grid-column:9"><div class="node__title">차마솔 광고 세팅 자동 수행</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-10" data-step="10" style="grid-column:10"><div class="node__title">차마솔 시나리오 정기 실행(운영 루틴)</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-11" data-step="11" style="grid-column:11"><div class="node__title">CMC 광고보고서 주간 생성(리포트 루틴)</div><div class="node__meta">AUTO</div></div>
+            <div class="node system" data-key="system-14" data-step="14" style="grid-column:14"><div class="node__title">후불 정산 금액 산정(월 2회) &amp; PG차감/미수금 분기 + 카드결제 성공/실패 처리</div><div class="node__meta">AUTO</div></div>
           </div>
         </section>
 
-        <!-- 후불계약 -->
         <section class="lane lane--contract" data-lane="contract">
           <div class="lane__label">후불계약 동선
             <small>후불 과금/한도/예산/정산/미수금/부속합의 중심 흐름</small>
           </div>
           <div class="lane__body">
-            <!-- ✅ 1번 시작 맞춤: col 1 -->
-            <div class="node" data-key="contract-1" data-step="1" style="grid-column:1">
-              <div class="node__title">1. 가입/동의 기반 형성</div>
-              <div class="node__meta">PRO 마케팅 신청 &amp; 약관 동의(신청 자격 충족 시)</div>
-            </div>
-            <!-- ✅ 중간은 순차로 2~10을 2~10에 배치(정확한 시작 정렬 + 흐름 안정) -->
-            <div class="node" data-key="contract-2" data-step="2" style="grid-column:2">
-              <div class="node__title">2. 결제수단 확보</div>
-              <div class="node__meta">카드 등록(미등록 시 등록 요청) / 기등록 카드 확인</div>
-            </div>
-            <div class="node" data-key="contract-3" data-step="3" style="grid-column:3">
-              <div class="node__title">3. 한도 확정</div>
-              <div class="node__meta">“후불 한도 확정 &amp; 광고 세팅 안내” 수신</div>
-            </div>
-            <div class="node" data-key="contract-4" data-step="4" style="grid-column:4">
-              <div class="node__title">4. 예산 반영</div>
-              <div class="node__meta">(알림으로 반영 결과 확인)</div>
-            </div>
-            <div class="node" data-key="contract-5" data-step="5" style="grid-column:5">
-              <div class="node__title">5. 월간 예산 반영(루틴)</div>
-              <div class="node__meta">“후불 예산 반영 알림” 수신</div>
-            </div>
-            <div class="node" data-key="contract-6" data-step="6" style="grid-column:6">
-              <div class="node__title">6. 한도 재산정(월 1회)</div>
-              <div class="node__meta">감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인</div>
-            </div>
-            <div class="node" data-key="contract-7" data-step="7" style="grid-column:7">
-              <div class="node__title">7. 증액 시 부속합의</div>
-              <div class="node__meta">(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인</div>
-            </div>
-            <div class="node" data-key="contract-8" data-step="8" style="grid-column:8">
-              <div class="node__title">8. 일예산 조정</div>
-              <div class="node__meta">증액&amp;일예산 조정 안내 수신</div>
-            </div>
-            <div class="node" data-key="contract-9" data-step="9" style="grid-column:9">
-              <div class="node__title">9. 정산(월 2회)</div>
-              <div class="node__meta">정산 예정 안내 수신, PG차감/미수금 내역 확인</div>
-            </div>
-            <div class="node" data-key="contract-10" data-step="10" style="grid-column:10">
-              <div class="node__title">10. 미수금 처리</div>
-              <div class="node__meta">카드결제 안내 수신 또는 실패&amp;광고중단/추심 안내 수신</div>
-            </div>
-            <!-- ✅ 11번은 15 아래로 -->
-            <div class="node" data-key="contract-11" data-step="11" style="grid-column:15">
-              <div class="node__title">11. 해지 시 정산 완료</div>
-              <div class="node__meta">해지&amp;정산 완료 확인, 완료 알림 수신</div>
-            </div>
+            <!-- ✅ 균등 간격: [1,2,4,5,7,8,9,11,12,14,15] -->
+            <div class="node" data-key="contract-1" data-step="1" style="grid-column:1"><div class="node__title">1. 가입/동의 기반 형성</div><div class="node__meta">PRO 마케팅 신청 &amp; 약관 동의(신청 자격 충족 시)</div></div>
+            <div class="node" data-key="contract-2" data-step="2" style="grid-column:2"><div class="node__title">2. 결제수단 확보</div><div class="node__meta">카드 등록(미등록 시 등록 요청) / 기등록 카드 확인</div></div>
+            <div class="node" data-key="contract-3" data-step="3" style="grid-column:4"><div class="node__title">3. 한도 확정</div><div class="node__meta">“후불 한도 확정 &amp; 광고 세팅 안내” 수신</div></div>
+            <div class="node" data-key="contract-4" data-step="4" style="grid-column:5"><div class="node__title">4. 예산 반영</div><div class="node__meta">(알림으로 반영 결과 확인)</div></div>
+            <div class="node" data-key="contract-5" data-step="5" style="grid-column:7"><div class="node__title">5. 월간 예산 반영(루틴)</div><div class="node__meta">“후불 예산 반영 알림” 수신</div></div>
+            <div class="node" data-key="contract-6" data-step="6" style="grid-column:8"><div class="node__title">6. 한도 재산정(월 1회)</div><div class="node__meta">감액: 감액 적용 안내 수신 / 증액: 부속합의 요청 확인</div></div>
+            <div class="node" data-key="contract-7" data-step="7" style="grid-column:9"><div class="node__title">7. 증액 시 부속합의</div><div class="node__meta">(몰어드민) 부속합의 요청 → 동의 → 완료 내역 확인</div></div>
+            <div class="node" data-key="contract-8" data-step="8" style="grid-column:11"><div class="node__title">8. 일예산 조정</div><div class="node__meta">증액&amp;일예산 조정 안내 수신</div></div>
+            <div class="node" data-key="contract-9" data-step="9" style="grid-column:12"><div class="node__title">9. 정산(월 2회)</div><div class="node__meta">정산 예정 안내 수신, PG차감/미수금 내역 확인</div></div>
+            <div class="node" data-key="contract-10" data-step="10" style="grid-column:14"><div class="node__title">10. 미수금 처리</div><div class="node__meta">카드결제 안내 수신 또는 실패&amp;광고중단/추심 안내 수신</div></div>
+            <div class="node" data-key="contract-11" data-step="11" style="grid-column:15"><div class="node__title">11. 해지 시 정산 완료</div><div class="node__meta">해지&amp;정산 완료 확인, 완료 알림 수신</div></div>
           </div>
         </section>
       </div>
@@ -501,8 +335,8 @@
   </div>
 
   <script>
-  // ✅ nodeDetails는 원문 그대로 사용(사용자 제공 데이터 유지)
-  const nodeDetails = (typeof nodeDetails !== 'undefined') ? nodeDetails : {};
+  /* ✅ nodeDetails는 사용자가 준 그대로(생략 없이 붙여도 OK) */
+  const nodeDetails = window.nodeDetails || {}; // (원본 데이터를 그대로 쓰는 경우 window.nodeDetails로 넣어도 됨)
 
   const diagram = document.getElementById('diagram');
   const svg = document.getElementById('lines');
@@ -511,10 +345,6 @@
   const modalTitle = document.getElementById('modalTitle');
   const modalSubtitle = document.getElementById('modalSubtitle');
   const detailGrid = document.getElementById('detailGrid');
-
-  function clearSvgLines() {
-    while (svg.firstChild) svg.removeChild(svg.firstChild);
-  }
 
   function ensureDefs() {
     if (svg.querySelector('defs')) return;
@@ -532,13 +362,23 @@
       poly.setAttribute('points','0,0 10,4 0,8');
       poly.setAttribute('fill', color);
       marker.appendChild(poly);
-      return marker;
+      defs.appendChild(marker);
     }
+    mkMarker('arrowhead', '#111827');
+    mkMarker('arrowheadBlue', '#0ea5e9');
+    mkMarker('arrowheadFaint', '#94a3b8');
 
-    defs.appendChild(mkMarker('arrowhead', '#111827'));
-    defs.appendChild(mkMarker('arrowheadBlue', '#0ea5e9'));
-    defs.appendChild(mkMarker('arrowheadFaint', '#94a3b8'));
     svg.appendChild(defs);
+  }
+
+  function clearSvgPathsOnly(){
+    [...svg.querySelectorAll('path')].forEach(p => p.remove()); // ✅ defs는 유지
+  }
+
+  function markerFor(cls){
+    if ((cls||'').includes('dashed')) return 'url(#arrowheadBlue)';
+    if ((cls||'').includes('faint')) return 'url(#arrowheadFaint)';
+    return 'url(#arrowhead)';
   }
 
   function getLaneNodes(laneName) {
@@ -562,8 +402,6 @@
       right: r.right - diagramRect.left,
       top: r.top - diagramRect.top,
       bottom: r.bottom - diagramRect.top,
-      width: r.width,
-      height: r.height,
       cx: (r.left + r.right)/2 - diagramRect.left,
       cy: (r.top + r.bottom)/2 - diagramRect.top
     };
@@ -575,20 +413,13 @@
     return { top: r.top - diagramRect.top, bottom: r.bottom - diagramRect.top };
   }
 
-  function markerFor(cls){
-    if ((cls || '').includes('dashed')) return 'url(#arrowheadBlue)';
-    if ((cls || '').includes('faint')) return 'url(#arrowheadFaint)';
-    return 'url(#arrowhead)';
-  }
-
-  // ✅ (1) 레인 내 순차: “노드 아래쪽 중간” 경로로만 연결
-  function laneFlowPath(fromEl, toEl, cls){
+  /* ✅ 같은 레인: “노드 아래 공간의 중간” 라인으로만 연결 */
+  function laneFlow(fromEl, toEl, cls){
     const diagramRect = diagram.getBoundingClientRect();
     const a = rectInDiagram(fromEl, diagramRect);
     const b = rectInDiagram(toEl, diagramRect);
     const laneR = laneRectInDiagram(fromEl, diagramRect);
 
-    // 노드 아래 공간의 중간(너무 아래로 붙지 않게 clamp)
     const y = Math.min(
       a.bottom + (laneR.bottom - a.bottom) * 0.55,
       laneR.bottom - 14
@@ -604,60 +435,68 @@
     p.setAttribute('d', `M ${x1} ${y} C ${x1+dx} ${y}, ${x2-dx} ${y}, ${x2} ${y}`);
     p.setAttribute('class', cls);
     p.setAttribute('marker-end', markerFor(cls));
-    return p;
+    svg.appendChild(p);
   }
 
-  // ✅ (2) 레인 간 연결: 대각선 금지, “레인 사이 빈 공간”으로만 ㄱ자 라우팅
-  function crossLanePath(fromEl, toEl, cls){
+  /* ✅ 레인 간: 대각선 금지(노드 관통 방지), 레인 사이 빈 공간으로 ㄱ자 라우팅 */
+  function crossLane(fromEl, toEl, cls){
     const diagramRect = diagram.getBoundingClientRect();
     const a = rectInDiagram(fromEl, diagramRect);
     const b = rectInDiagram(toEl, diagramRect);
+
     const la = laneRectInDiagram(fromEl, diagramRect);
     const lb = laneRectInDiagram(toEl, diagramRect);
 
-    const goingDown = (b.cy >= a.cy);
+    const down = b.cy >= a.cy;
+    const viaY = down ? (la.bottom + lb.top)/2 : (lb.bottom + la.top)/2;
 
-    // 레인 사이 빈 공간 Y (갭 중앙)
-    const viaY = goingDown ? (la.bottom + lb.top) / 2 : (lb.bottom + la.top) / 2;
-
-    // 시작/끝은 노드 edge로 정확히
     const startX = a.cx;
     const endX = b.cx;
-    const startY = goingDown ? (a.bottom + 6) : (a.top - 6);
-    const endY   = goingDown ? (b.top - 6)   : (b.bottom + 6);
+    const startY = down ? (a.bottom + 6) : (a.top - 6);
+    const endY   = down ? (b.top - 6) : (b.bottom + 6);
 
     const p = document.createElementNS('http://www.w3.org/2000/svg','path');
     p.setAttribute('d', `M ${startX} ${startY} L ${startX} ${viaY} L ${endX} ${viaY} L ${endX} ${endY}`);
     p.setAttribute('class', cls);
     p.setAttribute('marker-end', markerFor(cls));
-    return p;
+    svg.appendChild(p);
   }
 
-  function drawEdge(fromKey, toKey, cls='arrow') {
+  function drawEdge(fromKey, toKey, cls='arrow'){
     const from = getNodeElByKey(fromKey);
-    const to   = getNodeElByKey(toKey);
-    if (!from || !to) return;
+    const to = getNodeElByKey(toKey);
+    if(!from || !to) return;
 
     const fromLane = from.closest('.lane')?.dataset?.lane;
     const toLane = to.closest('.lane')?.dataset?.lane;
 
-    // 같은 레인: 아래쪽 중간으로
-    if (fromLane && toLane && fromLane === toLane){
-      svg.appendChild(laneFlowPath(from, to, cls));
-      return;
-    }
-    // 다른 레인: 레인 사이 공간으로
-    svg.appendChild(crossLanePath(from, to, cls));
+    if(fromLane && toLane && fromLane === toLane) laneFlow(from, to, cls);
+    else crossLane(from, to, cls);
   }
 
-  function draw() {
+  function computeDiagramSize() {
+    const st = getComputedStyle(document.documentElement);
+    const cols = 15;
+    const labelW = parseFloat(st.getPropertyValue('--labelW')) || 190;
+    const colW = parseFloat(st.getPropertyValue('--colW')) || 240;
+    const gap  = parseFloat(st.getPropertyValue('--gap'))  || 96;
+    const padX = parseFloat(st.getPropertyValue('--padX')) || 24;
+    const laneH = parseFloat(st.getPropertyValue('--laneH')) || 190;
+    const laneCount = diagram.querySelectorAll('.lane').length;
+    const w = labelW + (padX*2) + (colW*cols) + (gap*(cols-1)) + 24;
+    const h = laneH * laneCount;
+    diagram.style.width = `${Math.ceil(w)}px`;
+    diagram.style.height = `${Math.ceil(h)}px`;
+  }
+
+  function draw(){
     ensureDefs();
     svg.setAttribute('width', diagram.clientWidth);
     svg.setAttribute('height', diagram.clientHeight);
     svg.setAttribute('viewBox', `0 0 ${diagram.clientWidth} ${diagram.clientHeight}`);
-    clearSvgLines();
-    ensureDefs();
+    clearSvgPathsOnly();
 
+    // 레인 내 순차 연결
     const lanes = [
       { name:'customer', cls:'arrow' },
       { name:'ops', cls:'arrow' },
@@ -665,20 +504,14 @@
       { name:'contract', cls:'arrow' }
     ];
 
-    // 레인 내 순차 (항상 아래쪽 중간)
     lanes.forEach(l => {
       const list = getLaneNodes(l.name);
-      for (let i=0;i<list.length-1;i++) {
-        svg.appendChild(laneFlowPath(list[i].el, list[i+1].el, l.cls));
-
-        if (list[i+1].step - list[i].step > 1) {
-          const guide = laneFlowPath(list[i].el, list[i+1].el, 'arrow faint');
-          svg.appendChild(guide);
-        }
+      for(let i=0;i<list.length-1;i++){
+        laneFlow(list[i].el, list[i+1].el, l.cls);
       }
     });
 
-    // 핵심 의존/트리거 (레인 간은 ㄱ자로만)
+    // 핵심 트리거 연결(레인 간은 ㄱ자)
     drawEdge('system-1','customer-1','arrow dashed');
     drawEdge('system-1','ops-1','arrow dashed');
     drawEdge('customer-2','ops-2','arrow faint');
@@ -695,52 +528,29 @@
     drawEdge('system-6','customer-6','arrow dashed');
     drawEdge('system-6','ops-6','arrow dashed');
     drawEdge('customer-6','system-6','arrow dashed');
-
     drawEdge('ops-7','customer-7','arrow');
     drawEdge('ops-7','contract-3','arrow');
     drawEdge('ops-8','contract-4','arrow');
     drawEdge('ops-8','customer-7','arrow faint');
-
     drawEdge('ops-9','system-9','arrow dashed');
     drawEdge('ops-10','system-9','arrow dashed');
     drawEdge('system-9','customer-9','arrow dashed');
-
     drawEdge('ops-10','customer-8','arrow');
-
     drawEdge('system-10','customer-10','arrow dashed');
     drawEdge('system-11','customer-11','arrow dashed');
-
     drawEdge('ops-12','customer-12','arrow');
     drawEdge('ops-12','contract-5','arrow');
-
     drawEdge('ops-13','customer-13','arrow');
     drawEdge('ops-13','contract-6','arrow');
     drawEdge('ops-13','contract-7','arrow faint');
     drawEdge('customer-13','contract-7','arrow faint');
-
     drawEdge('system-14','customer-14','arrow dashed');
     drawEdge('system-14','ops-14','arrow dashed');
     drawEdge('system-14','contract-9','arrow dashed');
     drawEdge('system-14','contract-10','arrow dashed');
-
     drawEdge('customer-15','ops-15','arrow');
     drawEdge('ops-15','contract-11','arrow');
     drawEdge('customer-15','contract-11','arrow faint');
-  }
-
-  function computeDiagramSize() {
-    const st = getComputedStyle(document.documentElement);
-    const cols = 15;
-    const labelW = parseFloat(st.getPropertyValue('--labelW')) || 190;
-    const colW = parseFloat(st.getPropertyValue('--colW')) || 240;
-    const gap  = parseFloat(st.getPropertyValue('--gap'))  || 96;
-    const padX = parseFloat(st.getPropertyValue('--padX')) || 24;
-    const laneH = parseFloat(st.getPropertyValue('--laneH')) || 190;
-    const laneCount = diagram.querySelectorAll('.lane').length;
-    const w = labelW + (padX*2) + (colW*cols) + (gap*(cols-1)) + 24;
-    const h = laneH * laneCount;
-    diagram.style.width = `${Math.ceil(w)}px`;
-    diagram.style.height = `${Math.ceil(h)}px`;
   }
 
   function openModal(key) {
@@ -764,33 +574,25 @@
 
     backdrop.style.display = 'flex';
   }
-
-  function closeModal() {
-    backdrop.style.display = 'none';
-  }
+  function closeModal(){ backdrop.style.display = 'none'; }
 
   diagram.addEventListener('click', (e) => {
     const node = e.target.closest('.node');
     if (!node) return;
     openModal(node.dataset.key);
   });
-
   closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', (e) => {
-    if (e.target === backdrop) closeModal();
-  });
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-  window.addEventListener('load', () => {
+  function rerender(){
     computeDiagramSize();
-    draw();
-  });
-  window.addEventListener('resize', () => {
-    computeDiagramSize();
-    draw();
-  });
+    // ✅ 레이아웃 확정 후 그리기(화살표 “사라짐” 방지)
+    requestAnimationFrame(() => requestAnimationFrame(draw));
+  }
+
+  window.addEventListener('load', rerender);
+  window.addEventListener('resize', rerender);
   </script>
 </body>
 </html>
